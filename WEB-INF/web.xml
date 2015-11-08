@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<web-app>
+
+
+<servlet>
+<servlet-name>MCV</servlet-name>
+<servlet-class>MCV</servlet-class>
+</servlet>
+
+<servlet-mapping>
+<servlet-name>MCV</servlet-name>
+<url-mapping>/*</url-mapping>
+</servlet-mapping>
+
+
+
+
+</web-app>
+
