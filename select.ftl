@@ -3,6 +3,11 @@
 <div>
 Select your story
 </div>
+
+<div align="center">
+User: "+user+"<br>"
+Email: "+email+"<br>"
+</div>
 <div>
 <form action="read">
 <ul>
@@ -11,12 +16,6 @@ Select your story
     <br> 
   </#list>
 </ul>
-
-Username:<br>
-<input type="text" name="user">
-<br>
-Email:<br>
-<input type="text" name="email">
 
 <br><br>
 <input type="submit" value="Submit">

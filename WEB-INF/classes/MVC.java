@@ -25,18 +25,22 @@ public class MVC extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request,
 		HttpServletResponse response) throws ServletException, IOException {
-		//PrintWriter out = response.getWriter();
+		PrintWriter out = response.getWriter();
+		
 		try {
-			doPost(request,response);
-			//this.generatePage(request,out);
+			String page = request.getServletPath();
+			if(page.equals("login") || page.equals(""))
+				loginPage(request, response);
+			if((checkCookies(response) || checkUser(request, response)) && page.contains("select")){
+				createConnections();
+				doPost(request, response);
+			}
+
 		} catch (Exception e) {
-			//e.printStackTrace(out);
+			e.printStackTrace(out);
 		}
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{ 
-		//String user = request.getParameter("user");
-		//String email = request.getParameter("email");
-		//String ses = request.getSession().toString();
 		PrintWriter out = response.getWriter();
 		try {
 			this.generateBook(request,out);
@@ -57,13 +61,32 @@ public class MVC extends HttpServlet {
 	catch(Exception e){
 		System.out.println("Trouble connecting to the database");
 	}	}	}
+	
+	private boolean checkCookies(HttpServletRequest request){
+		Cookie[] co = request.getCookies();
+		String pass;
+		if(co!=null){
+			for(int i=0;i<co.length;i++)
+				if(co[i].getName().equals("use"))
+					return true;
+		}
+		else{
+		return false;
+	}
+	
 	/**
 	*Check the hash of the users password
 	*
 	*
 	*/
-	private void checkUser(String us, String pas){
+	private boolean checkUser(HttpServletRequest request, HttpServletResponse response){
 		try{
+			String us = request.getParameter("user");
+			String pas = request.getParameter("email");
+			
+			PrintWriter out = new PrintWriter("java.log");
+			out.println("Login attempt from:"+request.getRemoteIp+" with username:"+us);
+			out.close();
 		Statement st = conn.createStatement();
 		ResultSet rs = null;
 		rs = st.executeQuery("select pass,secret from web where user = '"+us+"'");
@@ -78,6 +101,9 @@ public class MVC extends HttpServlet {
          	   output = "0"+output;
     		}
 		if(output.equals(truePass){
+			Cookie co = new Cookie("use","online");
+			co.setMaxAge(1000);
+			response.addCookie(co);
 			return true;
 		}
 		
@@ -87,30 +113,106 @@ public class MVC extends HttpServlet {
 			e.printStackTrace(System.err);
 			return false;
 		}
-
+		}
 	}
 
-	private void generateBook(HttpServletRequest req, PrintWriter out) throws Exception{
+	/**
+	* Provides the simple login page for the app
+	*
+	*/
+	private void loginPage(HttpServletRequest req, PrintWriter out) throws Exception{
 		
 		/* Create and adjust the configuration singleton */
 		Configuration cfg = new Configuration(Configuration.VERSION_2_3_22);
 		cfg.setDirectoryForTemplateLoading(new File("/opt/jetty/webapps/servlets"));
 		Map<String,String> root = new HashMap<String,String>();
 		cfg.setDefaultEncoding("UTF-8");
+		Template temp = cfg.getTemplate("login.ftl");
+		temp.process(root,out);
+	}
+	
+	
+	/**
+	*Generates the pages for the book
+	*
+	*/
+	private void generateBook(HttpServletRequest req, PrintWriter out) throws Exception{
 		
-		out.println("<html><header>");
-		out.println("User: "+req.getParameter("user")+"<br>");
-		out.println("Email: "+req.getParameter("email")+"<br>");
-		out.println("<header>");
+		/* Create and adjust the configuration singleton */
+		Configuration cfg = new Configuration(Configuration.VERSION_2_3_22);
+		cfg.setDirectoryForTemplateLoading(new File("/opt/jetty/webapps/htmlApp"));
+		Map<String,String> root = new HashMap<String,String>();
+		cfg.setDefaultEncoding("UTF-8");
+		
+		
+		Statement st = conn.createStatement();
+		ResultSet rs = null
+		String us = request.getParameter("user");
+		rs = st.executeQuery("select email from web where user = '"+us+"'");
+		String user = rs.getString(1);
+		String email = rs.getString(2);
+		
+		
+		
+		out.println("<html><header><div align=\"center\">");
+		out.println("User: "+user+"<br>");
+		out.println("Email: "+email+"<br>");
+		out.println("</div><header>");
 		Template temp= null;
-		ArrayList<String> names = Collections.list(req.getParameterNames());//new ArrayList<String>(Arrays.asList(req.getParameterNames()));
+		//BufferedReader fl= null;
+		String fl = null;
+		ArrayList<String> names = Collections.list(req.getParameterNames());
 		for(int i=0;i<names.size();i++){
 			if(names.get(i).contains(".sty")&& req.getParameter(names.get(i)).equalsIgnoreCase("on")){
-				temp = cfg.getTemplate(names.get(i));
+				fl=names.get(i);
+				//fl = BufferedReader(new FileReader("/opt/jetty/webapps/htmlApp/"+names.get(i)));
+				//temp = cfg.getTemplate(names.get(i));
 				break;
 			}
-		}	
-		//Template temp = cfg.getTemplate(req.getParameter("bookName").concat(".sty"));
+		}
+		
+		
+		
+		Arraylist<String> ar = new ArrayList<String>();
+		StringBuffer bf = new StringBuffer();
+		String line = null;
+		
+		for(int i=0;i<bf.lastIndexOf("</page>");i=bf.indexOf("</page>",i)+7){
+			ar.add(bf.substring(i,bf.indexOf("</page>",i)+7));	
+		}
+		/*while((line = fl.readLine())!= null){
+			if(line.contains("<page>")){
+				br.append(line);
+				while((line = fl.readLine())!= null){
+					br.append(line);
+					if(line.contains("</page>")){
+						break;
+					}
+				}
+				ar.add(bf.toString(());
+				bf = new StringBuffer();
+			}
+		}*/
+		String page = req.getServletPath();
+		int p = page.lastIndexOf('/');
+		if(p<0)
+			p=0;
+		if(p>ar.size())
+			p=ar.size();
+		
+		out.println(ar.get(p));
+		
+		
+		//FormSection for buttons
+	
+		if(p>0)
+			out.println("<div align=\"center\">	<form action=\"select/"+(p-1)+" ><input type=\"submit\" value=\"Submit\"></div>");
+	
+		if(p<ar.size())
+			out.println("<div align=\"center\"> <form action=\"select/"+(p+1)+" ><input type=\"submit\" value=\"Submit\"></div>");
+		//End form section
+		
+
 		temp.process(root,out);
 
 
@@ -120,7 +222,7 @@ public class MVC extends HttpServlet {
 	*http://stackoverflow.com/questions/2102952/listing-files-in-a-directory-matching-a-pattern-in-java
 	*
 	*/
-	private File[] loadStories(){
+	/*private File[] loadStories(){
 		File dir = new File("/opt/jetty/webapps/servlets");
 		File[] files = dir.listFiles(new FilenameFilter(){
 		@Override
@@ -130,14 +232,43 @@ public class MVC extends HttpServlet {
 		});
 		return files;
 		
+	}*/
+	
+	private ArrayList<String> loadStoryName(HttpServletRequest request){
+		
+		Statement st = conn.createStatement();
+		ArrayList<String> stories = new ArrayList<String>();
+		ResultSet rs = null;
+		String us = request.getParameter("user");
+		rs = st.executeQuery("select name from stories");
+		ResultSetMetaData meta = rs.getMetaData();
+		int colCount = meta.getColumnCount();
+		for (int col=1; col <= colCount; col++) {
+			stories.add(rs.getString(col))
+		}
+		return stories;
 	}
+	
+	private StringBuffer loadStory(String name){
+		Statement st = conn.createStatement();
+		ArrayList<String> stories = new ArrayList<String>();
+		ResultSet rs = null;
+		String us = request.getParameter("user");
+		rs = st.executeQuery("select text from stories where name='"+name+"'");
+		return new StringBuffer(rs.getString(1));
+		//return stories;
+
+	
+	}
+	
+	
 	private void generatePage(HttpServletRequest req, PrintWriter out) throws Exception {
 		/* ------------------------------------------------------------------------ */    
 		/* You should do this ONLY ONCE in the whole application life-cycle:        */    
 
 		/* Create and adjust the configuration singleton */
 		Configuration cfg = new Configuration(Configuration.VERSION_2_3_22);
-		cfg.setDirectoryForTemplateLoading(new File("/opt/jetty/webapps/servlets"));
+		cfg.setDirectoryForTemplateLoading(new File("/opt/jetty/webapps/htmlApp"));
 		cfg.setDefaultEncoding("UTF-8");
 		//cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW);
 
@@ -148,20 +279,17 @@ public class MVC extends HttpServlet {
 		Map<String,Object> root = new HashMap<String,Object>();
 		HttpSession session = req.getSession();
 
-		ArrayList<String> sty = new ArrayList<String>();
-		ArrayList<File> files = new ArrayList<File>(Arrays.asList(loadStories())); 
-		for(int i=0;i<files.size();i++)
-			sty.add(files.get(i).getName());
+		//ArrayList<String> sty = new ArrayList<String>();
+		//ArrayList<File> files = new ArrayList<File>(Arrays.asList(loadStories())); 
+		//for(int i=0;i<files.size();i++)
+		//	sty.add(files.get(i).getName());
 		
-		root.put("stories",sty);
-		/* Get the template (uses cache internally) */
+		root.put("stories",loadStoryName());
+
 		
 		Template temp = cfg.getTemplate("select.ftl");
-
-		/* Merge data-model with template */
 		temp.process(root, out);
-		// Note: Depending on what `out` is, you may need to call `out.close()`.
-		// This is usually the case for file output, but not for servlet output.
+
 	}
 
 	private String formatTime(long t) {
