@@ -74,7 +74,6 @@ public class MVC extends HttpServlet {
 				if(co[i].getName().equals("use"))
 					return true;
 		}
-		else
 		return false;
 	}
 	
@@ -253,7 +252,7 @@ public class MVC extends HttpServlet {
 		return stories;
 	}
 	
-	private StringBuffer loadStory(HttpServletRequest request,String name){
+	private StringBuffer loadStory(HttpServletRequest request,String name) throws SQLException{
 		Statement st = conn.createStatement();
 		ArrayList<String> stories = new ArrayList<String>();
 		ResultSet rs = null;
