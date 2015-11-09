@@ -11,6 +11,7 @@ import java.util.*;
 import java.io.*;
 import java.sql.*;
 import java.math.*;
+import javax.xml.*;
 
 import javax.servlet.http.*;
 import javax.servlet.*;
@@ -88,7 +89,7 @@ public class MVC extends HttpServlet {
 			String pas = request.getParameter("email");
 			
 			PrintWriter out = new PrintWriter("java.log");
-			out.println("Login attempt from:"+request.getRemoteIp+" with username:"+us);
+			out.println("Login attempt from:"+request.getRemoteIp()+" with username:"+us);
 			out.close();
 		Statement st = conn.createStatement();
 		ResultSet rs = null;
@@ -150,7 +151,7 @@ public class MVC extends HttpServlet {
 		
 		Statement st = conn.createStatement();
 		ResultSet rs = null;
-		String us = request.getParameter("user");
+		String us = req.getParameter("user");
 		rs = st.executeQuery("select email from web where user = '"+us+"'");
 		String user = rs.getString(1);
 		String email = rs.getString(2);
@@ -177,7 +178,7 @@ public class MVC extends HttpServlet {
 		
 		
 		ArrayList<String> ar = new ArrayList<String>();
-		StringBuffer bf = new StringBuffer();
+		StringBuffer bf = loadStory(req,fl);
 		String line = null;
 		
 		for(int i=0;i<bf.lastIndexOf("</page>");i=bf.indexOf("</page>",i)+7){
@@ -252,7 +253,7 @@ public class MVC extends HttpServlet {
 		return stories;
 	}
 	
-	private StringBuffer loadStory(String name){
+	private StringBuffer loadStory(HttpServletRequest request,String name){
 		Statement st = conn.createStatement();
 		ArrayList<String> stories = new ArrayList<String>();
 		ResultSet rs = null;
