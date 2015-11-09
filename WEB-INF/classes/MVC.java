@@ -60,7 +60,7 @@ public class MVC extends HttpServlet {
 	try{
 		String url = "jdbc:mysql://localhost/383-sql";
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
-		conn.Driver.getConnection(url,user,pass);
+		conn.DriverManager.getConnection(url,user,pass);
 	}catch(Exception e){
 		System.out.println("Trouble connecting to the database");
 	}	
@@ -89,7 +89,7 @@ public class MVC extends HttpServlet {
 			String pas = request.getParameter("email");
 			
 			PrintWriter out = new PrintWriter("java.log");
-			out.println("Login attempt from:"+request.getRemoteIp()+" with username:"+us);
+			out.println("Login attempt from:"+request.getRemoteAddr()+" with username:"+us);
 			out.close();
 		Statement st = conn.createStatement();
 		ResultSet rs = null;
