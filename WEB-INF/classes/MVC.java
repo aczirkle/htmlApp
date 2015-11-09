@@ -60,7 +60,7 @@ public class MVC extends HttpServlet {
 	try{
 		String url = "jdbc:mysql://localhost/383-sql";
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
-		conn.DriverManager.getConnection(url,user,pass);
+		conn = DriverManager.getConnection(url,user,pass);
 	}catch(Exception e){
 		System.out.println("Trouble connecting to the database");
 	}	
