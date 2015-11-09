@@ -252,7 +252,7 @@ public class MVC extends HttpServlet {
 		return stories;
 	}
 	
-	private StringBuffer loadStory(HttpServletRequest request,String name) throws SQLException{
+	private StringBuffer loadStory(HttpServletRequest request,String name) throws SQLException, Exception{
 		Statement st = conn.createStatement();
 		ArrayList<String> stories = new ArrayList<String>();
 		ResultSet rs = null;
