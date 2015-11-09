@@ -58,9 +58,10 @@ public class MVC extends HttpServlet {
 		String url = "jdbc:mysql://localhost/383-sql";
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
 		conn.Driver.getConnection(url,user,pass);
-	catch(Exception e){
+	}catch(Exception e){
 		System.out.println("Trouble connecting to the database");
-	}	}	}
+	}	
+	}
 	
 	private boolean checkCookies(HttpServletRequest request){
 		Cookie[] co = request.getCookies();
@@ -100,7 +101,7 @@ public class MVC extends HttpServlet {
 		while ( output.length() < 32 ) {
          	   output = "0"+output;
     		}
-		if(output.equals(truePass){
+		if(output.equals(truePass)){
 			Cookie co = new Cookie("use","online");
 			co.setMaxAge(1000);
 			response.addCookie(co);
@@ -146,7 +147,7 @@ public class MVC extends HttpServlet {
 		
 		
 		Statement st = conn.createStatement();
-		ResultSet rs = null
+		ResultSet rs = null;
 		String us = request.getParameter("user");
 		rs = st.executeQuery("select email from web where user = '"+us+"'");
 		String user = rs.getString(1);
@@ -244,7 +245,7 @@ public class MVC extends HttpServlet {
 		ResultSetMetaData meta = rs.getMetaData();
 		int colCount = meta.getColumnCount();
 		for (int col=1; col <= colCount; col++) {
-			stories.add(rs.getString(col))
+			stories.add(rs.getString(col));
 		}
 		return stories;
 	}
