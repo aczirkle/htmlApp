@@ -90,7 +90,7 @@ public class MVC extends HttpServlet {
 			out.close();
 		Statement st = conn.createStatement();
 		ResultSet rs = null;
-		rs = st.executeQuery("select pass,secret from web where user = '"+us+"'");
+		rs = st.executeQuery("select pass,secret from login where user = '"+us+"'");
 		String truePass = rs.getString(1);
 		String secret = rs.getString(2);
 		
@@ -235,7 +235,7 @@ public class MVC extends HttpServlet {
 		
 	}*/
 	
-	private ArrayList<String> loadStoryName(HttpServletRequest request){
+	private ArrayList<String> loadStoryName(HttpServletRequest request) throws Exception{
 		
 		Statement st = conn.createStatement();
 		ArrayList<String> stories = new ArrayList<String>();
@@ -256,7 +256,15 @@ public class MVC extends HttpServlet {
 		ResultSet rs = null;
 		String us = request.getParameter("user");
 		rs = st.executeQuery("select text from stories where name='"+name+"'");
-		return new StringBuffer(rs.getString(1));
+
+		BufferedReader in = new BufferedReader(new FileReader(rs.getString(1)));
+		String str;
+		StringBuffer buf = new BufferedReader();
+		while ((str = in.readLine()) != null)
+			buf.append(str);
+		in.close();
+		return buf;
+		
 		//return stories;
 
 	
