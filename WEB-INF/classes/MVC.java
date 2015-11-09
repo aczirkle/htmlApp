@@ -10,9 +10,11 @@ import freemarker.template.*;
 import java.util.*;
 import java.io.*;
 import java.sql.*;
+import java.math.*;
 
 import javax.servlet.http.*;
 import javax.servlet.*;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -30,8 +32,8 @@ public class MVC extends HttpServlet {
 		try {
 			String page = request.getServletPath();
 			if(page.equals("login") || page.equals(""))
-				loginPage(request, response);
-			if((checkCookies(response) || checkUser(request, response)) && page.contains("select")){
+				loginPage(request, out);
+			if((checkCookies(request) || checkUser(request, response)) && page.contains("select")){
 				createConnections();
 				doPost(request, response);
 			}
@@ -174,7 +176,7 @@ public class MVC extends HttpServlet {
 		
 		
 		
-		Arraylist<String> ar = new ArrayList<String>();
+		ArrayList<String> ar = new ArrayList<String>();
 		StringBuffer bf = new StringBuffer();
 		String line = null;
 		
@@ -259,7 +261,7 @@ public class MVC extends HttpServlet {
 
 		BufferedReader in = new BufferedReader(new FileReader(rs.getString(1)));
 		String str;
-		StringBuffer buf = new BufferedReader();
+		StringBuffer buf = new StringBuffer();
 		while ((str = in.readLine()) != null)
 			buf.append(str);
 		in.close();
@@ -293,7 +295,7 @@ public class MVC extends HttpServlet {
 		//for(int i=0;i<files.size();i++)
 		//	sty.add(files.get(i).getName());
 		
-		root.put("stories",loadStoryName());
+		root.put("stories",loadStoryName(req));
 
 		
 		Template temp = cfg.getTemplate("select.ftl");
