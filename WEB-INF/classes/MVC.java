@@ -71,7 +71,7 @@ public class MVC extends HttpServlet {
 				if(co[i].getName().equals("use"))
 					return true;
 		}
-		else{
+		else
 		return false;
 	}
 	
@@ -114,7 +114,7 @@ public class MVC extends HttpServlet {
 			e.printStackTrace(System.err);
 			return false;
 		}
-		}
+		
 	}
 
 	/**
