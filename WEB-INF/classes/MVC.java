@@ -44,6 +44,7 @@ public class MVC extends HttpServlet {
 			errorPage(request,response);
 		} catch (Exception e) {
 			e.printStackTrace(out);
+			errorPage(request,response);
 		}
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{ 
