@@ -1,7 +1,7 @@
 <html>
 <body>
 <h2 align="center">
-Login to webreader
+Make a new User account
 </h2>
 <div>
 <form action="makeUser" >

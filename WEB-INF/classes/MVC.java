@@ -95,7 +95,7 @@ public class MVC extends HttpServlet {
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
 		conn = DriverManager.getConnection(url,user,pass);
 	}catch(Exception e){
-		System.out.println("Trouble connecting to the database");
+		System.out.println("Trouble connecting to the database"+ e);
 	}	
 	}
 	
