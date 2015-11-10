@@ -1,7 +1,7 @@
 /*
    MVC for book app
    zirkleac
-   12/6/2015
+   11/6/2015
    cse383
  */
 
@@ -26,6 +26,11 @@ public class MVC extends HttpServlet {
 	final String pass="test123";
 	Connection conn = null;
 	
+	
+	/**
+	* Organizer code, it checks to see where the user is attepmting to access and directs them.
+	*
+	*/
 	protected void doGet(HttpServletRequest request,
 		HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
@@ -47,6 +52,11 @@ public class MVC extends HttpServlet {
 			errorPage(request,response);
 		}
 	}
+	
+	/**
+	*	doPost	
+	*	Spliter code for generating the pages
+	*/
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{ 
 		PrintWriter out = response.getWriter();
 		try {
@@ -55,6 +65,10 @@ public class MVC extends HttpServlet {
 		catch (Exception e){e.printStackTrace(out);}
 	}
 	
+	/**
+	*	errorPage
+	*	Provides an error page for the user with the location they were trying to access
+	*/
 	private void errorPage(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		PrintWriter out = response.getWriter();
 		out.println("I ran into an error.");
@@ -78,6 +92,10 @@ public class MVC extends HttpServlet {
 	}	
 	}
 	
+	/**
+	*	checkCookies
+	*	checks to see if the user is already logged in to the server
+	*/
 	private boolean checkCookies(HttpServletRequest request){
 		Cookie[] co = request.getCookies();
 		String pass;
@@ -249,6 +267,10 @@ public class MVC extends HttpServlet {
 		
 	}*/
 	
+	/**
+	* loadStoryName
+	* Provides a list of the stories in the database
+	*/
 	private ArrayList<String> loadStoryName(HttpServletRequest request) throws Exception{
 		
 		Statement st = conn.createStatement();
@@ -264,6 +286,10 @@ public class MVC extends HttpServlet {
 		return stories;
 	}
 	
+	/**
+	* loadStory
+	* Loads the text and page of the story
+	*/
 	private StringBuffer loadStory(HttpServletRequest request,String name) throws SQLException, Exception{
 		Statement st = conn.createStatement();
 		ArrayList<String> stories = new ArrayList<String>();
@@ -284,7 +310,10 @@ public class MVC extends HttpServlet {
 	
 	}
 	
-	
+	/**
+	* generatePage
+	* creates the select a story page with a list of story names
+	*/
 	private void generatePage(HttpServletRequest req, PrintWriter out) throws Exception {
 		/* ------------------------------------------------------------------------ */    
 		/* You should do this ONLY ONCE in the whole application life-cycle:        */    
