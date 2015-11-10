@@ -60,7 +60,8 @@ public class MVC extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		out.println("I ran into an error.");
 		out.println("You requested "+request.getServletPath());
-		/* todo login data if avilable
+		out.close();
+		/* todo login data if avilable*/
 	}
 
 
