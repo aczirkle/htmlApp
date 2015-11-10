@@ -90,14 +90,10 @@ public class MVC extends HttpServlet {
 	*Create connection to the the database
 	*
 	*/
-	private void createConnections(){
-	try{
+	private void createConnections() throws Exception{
 		String url = "jdbc:mysql://localhost/383-sql";
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
 		conn = DriverManager.getConnection(url,user,pass);
-	}catch(Exception e){
-		System.out.println("Trouble connecting to the database"+ e);
-	}	
 	}
 	
 	/**
