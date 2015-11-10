@@ -182,7 +182,7 @@ public class MVC extends HttpServlet {
 		createConnections();
 		
 		Statement st = conn.createStatement();
-		st.executeUpdate("insert into login values('"+us+"','"+pass+"','"+output+"')");
+		st.executeUpdate("insert into login values('"+us+"','"+output+"','"+secret+"')");
 		
 	
 		Cookie co = new Cookie("use","online");
