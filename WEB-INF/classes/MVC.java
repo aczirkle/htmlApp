@@ -37,12 +37,15 @@ public class MVC extends HttpServlet {
 		
 		try {
 			String page = request.getServletPath();
-			if((checkCookies(request) || checkUser(request, response))&& page.equals("select")){
-				
+			if(page.equals("select") && (checkCookies(request) || checkUser(request, response))){
 				doPost(request,response);
 			}
 			if(page.equals("makePage")){
 				makePage(request, out);
+				//doPost(request,response);
+			}
+			if(page.equals("makeUser")){
+				makeUser(request, response);
 				//doPost(request,response);
 			}
 			//String page = request.getServletPath();
