@@ -41,9 +41,11 @@ public class MVC extends HttpServlet {
 				createConnections();
 				doPost(request,response);
 			}
-			
+			if(page.equals("makePage")){
+				makeUser(request, response);
+			}
 			//String page = request.getServletPath();
-			if(page.equals("login") || page.equals(""))
+			if(page.contains("login") || page.equals(""))
 				loginPage(request, out);
 			/*else{
 			if((checkCookies(request) || checkUser(request, response)) && page.contains("select")){
@@ -154,6 +156,47 @@ public class MVC extends HttpServlet {
 		}
 		
 	}
+	
+	private boolean makeUser(HttpServletRequest request, HttpServletResponse response){
+		try{
+			String us = request.getParameter("user");
+			String pas = request.getParameter("pass");
+			if(us==null || pas==null)
+				return false;
+			PrintWriter out = new PrintWriter("java.log");
+			out.println("User attempt create from:"+request.getRemoteAddr()+" with username:"+us);
+			out.close();
+		
+		int secret = (int) (System.currentTimeMillis() / 1000L);
+		
+		MessageDigest dig = MessageDigest.getInstance("SHA-256");
+		dig.update((pas+secret).getBytes("UTF-8"));
+		BigInteger temp = new BigInteger(1,dig.digest());
+		String output = temp.toString(16);
+		while ( output.length() < 32 ) {
+         	   output = "0"+output;
+    	}
+		
+		
+		
+		Statement st = conn.createStatement();
+		st.executeUpdate("insert into login values("+us+","+pass+","+output+")");
+		
+	
+		Cookie co = new Cookie("use","online");
+		co.setMaxAge(1000);
+		response.addCookie(co);
+		return true;
+		
+		}
+		catch(Exception e){
+			e.printStackTrace(System.err);
+			return false;
+		}
+		
+	}
+	
+	
 
 	/**
 	* Provides the simple login page for the app
@@ -210,7 +253,7 @@ public class MVC extends HttpServlet {
 			}
 		}
 		
-		
+	
 		
 		ArrayList<String> ar = new ArrayList<String>();
 		StringBuffer bf = loadStory(req,fl);
