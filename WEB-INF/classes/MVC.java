@@ -37,7 +37,7 @@ public class MVC extends HttpServlet {
 		
 		try {
 			String page = request.getServletPath();
-			if(checkCookies(request) || checkUser(request, response)){
+			if((checkCookies(request) || checkUser(request, response))&& page.contains("select")){
 				
 				doPost(request,response);
 			}
