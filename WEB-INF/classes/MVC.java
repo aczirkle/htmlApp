@@ -36,7 +36,7 @@ public class MVC extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		
 		try {
-			String page = request.getServletPath();
+			String page = request.getPathInfo();
 			System.out.println("User attempted to access: "+page);
 			if(page.equals("select") && (checkCookies(request) || checkUser(request, response))){
 				doPost(request,response);
@@ -84,7 +84,7 @@ public class MVC extends HttpServlet {
 	private void errorPage(HttpServletRequest request, HttpServletResponse response) throws IOException{
 		PrintWriter out = response.getWriter();
 		out.println("I ran into an error.");
-		out.println("You requested "+request.getServletPath());
+		out.println("You requested "+request.getPathInfo());
 		out.close();
 		/* todo login data if avilable*/
 	}
