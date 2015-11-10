@@ -38,19 +38,19 @@ public class MVC extends HttpServlet {
 		try {
 			String page = request.getPathInfo();
 			System.out.println("User attempted to access: "+page);
-			if(page.equals("select") && (checkCookies(request) || checkUser(request, response))){
+			if(page.contains("select") && (checkCookies(request) || checkUser(request, response))){
 				doPost(request,response);
 			}
-			if(page.equals("makePage")){
+			if(page.contains("makePage")){
 				makePage(request, out);
 				//doPost(request,response);
 			}
-			if(page.equals("makeUser")){
+			if(page.contains("makeUser")){
 				makeUser(request, response);
 				//doPost(request,response);
 			}
 			//String page = request.getServletPath();
-			if(page.contains("login") || page.equals(""))
+			if(page.contains("login") || page.equals("/"))
 				loginPage(request, out);
 			/*else{
 			if((checkCookies(request) || checkUser(request, response)) && page.contains("select")){
