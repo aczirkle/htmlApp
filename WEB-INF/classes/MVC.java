@@ -43,6 +43,7 @@ public class MVC extends HttpServlet {
 			}
 			if(page.equals("makePage")){
 				makeUser(request, response);
+				doPost(request,response);
 			}
 			//String page = request.getServletPath();
 			if(page.contains("login") || page.equals(""))
@@ -211,6 +212,18 @@ public class MVC extends HttpServlet {
 		Map<String,String> root = new HashMap<String,String>();
 		cfg.setDefaultEncoding("UTF-8");
 		Template temp = cfg.getTemplate("login.ftl");
+		temp.process(root,out);
+	}
+	
+	
+		private void makePage(HttpServletRequest req, PrintWriter out) throws Exception{
+		
+		/* Create and adjust the configuration singleton */
+		Configuration cfg = new Configuration(Configuration.VERSION_2_3_22);
+		cfg.setDirectoryForTemplateLoading(new File("/opt/jetty/webapps/htmlApp"));
+		Map<String,String> root = new HashMap<String,String>();
+		cfg.setDefaultEncoding("UTF-8");
+		Template temp = cfg.getTemplate("makeUser.ftl");
 		temp.process(root,out);
 	}
 	
