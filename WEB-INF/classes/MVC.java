@@ -38,7 +38,7 @@ public class MVC extends HttpServlet {
 		try {
 			String page = request.getServletPath();
 			if(checkCookies(request) || checkUser(request, response)){
-				createConnections();
+				
 				doPost(request,response);
 			}
 			if(page.equals("makePage")){
@@ -121,6 +121,7 @@ public class MVC extends HttpServlet {
 	*/
 	private boolean checkUser(HttpServletRequest request, HttpServletResponse response){
 		try{
+			createConnections();
 			String us = request.getParameter("user");
 			String pas = request.getParameter("pass");
 			if(us==null || pas==null)
@@ -226,6 +227,7 @@ public class MVC extends HttpServlet {
 		Map<String,String> root = new HashMap<String,String>();
 		cfg.setDefaultEncoding("UTF-8");
 		
+		createConnections();
 		
 		//Statement st = conn.createStatement();
 		//ResultSet rs = null;
