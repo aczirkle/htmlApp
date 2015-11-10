@@ -179,7 +179,7 @@ public class MVC extends HttpServlet {
          	   output = "0"+output;
     	}
 		
-		
+		createConnections();
 		
 		Statement st = conn.createStatement();
 		st.executeUpdate("insert into login values("+us+","+pass+","+output+")");
