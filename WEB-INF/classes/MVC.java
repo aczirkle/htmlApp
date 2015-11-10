@@ -43,7 +43,7 @@ public class MVC extends HttpServlet {
 			}
 			if(page.equals("makePage")){
 				makePage(request, out);
-				doPost(request,response);
+				//doPost(request,response);
 			}
 			//String page = request.getServletPath();
 			if(page.contains("login") || page.equals(""))
