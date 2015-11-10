@@ -1,19 +1,13 @@
 <?xml version="1.0"?>
 <web-app>
-
-
+asd
 <servlet>
 <servlet-name>MCV</servlet-name>
-<servlet-class>MCV</servlet-class>
+<servlet-class>MVC</servlet-class>
 </servlet>
-
 <servlet-mapping>
 <servlet-name>MCV</servlet-name>
-<url-mapping>/*</url-mapping>
+<url-pattern>/*</url-pattern>
 </servlet-mapping>
-
-
-
-
 </web-app>
 
