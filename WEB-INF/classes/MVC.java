@@ -37,7 +37,7 @@ public class MVC extends HttpServlet {
 		
 		try {
 			String page = request.getServletPath();
-			if((checkCookies(request) || checkUser(request, response))&& page.contains("select")){
+			if((checkCookies(request) || checkUser(request, response))&& page.equals("select")){
 				
 				doPost(request,response);
 			}
@@ -219,7 +219,7 @@ public class MVC extends HttpServlet {
 		cfg.setDirectoryForTemplateLoading(new File("/opt/jetty/webapps/htmlApp"));
 		Map<String,String> root = new HashMap<String,String>();
 		cfg.setDefaultEncoding("UTF-8");
-		Template temp = cfg.getTemplate("makeUser.ftl");
+		Template temp = cfg.getTemplate("make.ftl");
 		temp.process(root,out);
 	}
 	
