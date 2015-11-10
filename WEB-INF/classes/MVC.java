@@ -51,7 +51,6 @@ public class MVC extends HttpServlet {
 				doPost(request, response);
 			}*/
 
-			}
 			//errorPage(request,response);
 		} catch (Exception e) {
 			e.printStackTrace(out);
