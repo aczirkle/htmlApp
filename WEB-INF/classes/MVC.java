@@ -157,7 +157,7 @@ public class MVC extends HttpServlet {
 		
 		/* Create and adjust the configuration singleton */
 		Configuration cfg = new Configuration(Configuration.VERSION_2_3_22);
-		cfg.setDirectoryForTemplateLoading(new File("/opt/jetty/webapps/servlets"));
+		cfg.setDirectoryForTemplateLoading(new File("/opt/jetty/webapps/htmlApp"));
 		Map<String,String> root = new HashMap<String,String>();
 		cfg.setDefaultEncoding("UTF-8");
 		Template temp = cfg.getTemplate("login.ftl");
