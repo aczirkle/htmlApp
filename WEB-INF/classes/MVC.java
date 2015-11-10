@@ -37,6 +37,7 @@ public class MVC extends HttpServlet {
 		
 		try {
 			String page = request.getServletPath();
+			System.out.println("User attempted to access: "page)
 			if(page.equals("select") && (checkCookies(request) || checkUser(request, response))){
 				doPost(request,response);
 			}
