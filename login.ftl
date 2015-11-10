@@ -9,8 +9,8 @@ Login to webreader
 Username:<br>
 <input type="text" name="user">
 <br>
-Email:<br>
-<input type="text" name="email">
+Password:<br>
+<input type="text" name="pass">
 
 <br><br>
 <input type="submit" value="Submit">

@@ -37,16 +37,22 @@ public class MVC extends HttpServlet {
 		
 		try {
 			String page = request.getServletPath();
+			if(checkCookies(request) || checkUser(request, response)){
+				createConnections();
+				doPost(request,response);
+			}
+			
+			//String page = request.getServletPath();
 			if(page.equals("login") || page.equals(""))
 				loginPage(request, out);
-			else{
+			/*else{
 			if((checkCookies(request) || checkUser(request, response)) && page.contains("select")){
 				createConnections();
 				doPost(request, response);
-			}
+			}*/
 
 			}
-			errorPage(request,response);
+			//errorPage(request,response);
 		} catch (Exception e) {
 			e.printStackTrace(out);
 			errorPage(request,response);
@@ -115,8 +121,9 @@ public class MVC extends HttpServlet {
 	private boolean checkUser(HttpServletRequest request, HttpServletResponse response){
 		try{
 			String us = request.getParameter("user");
-			String pas = request.getParameter("email");
-			
+			String pas = request.getParameter("pass");
+			if(us==null || pas==null)
+				return false;
 			PrintWriter out = new PrintWriter("java.log");
 			out.println("Login attempt from:"+request.getRemoteAddr()+" with username:"+us);
 			out.close();
@@ -178,18 +185,18 @@ public class MVC extends HttpServlet {
 		cfg.setDefaultEncoding("UTF-8");
 		
 		
-		Statement st = conn.createStatement();
-		ResultSet rs = null;
-		String us = req.getParameter("user");
-		rs = st.executeQuery("select email from web where user = '"+us+"'");
-		String user = rs.getString(1);
-		String email = rs.getString(2);
+		//Statement st = conn.createStatement();
+		//ResultSet rs = null;
+		//String us = req.getParameter("user");
+		//rs = st.executeQuery("select email from web where user = '"+us+"'");
+		//String user = rs.getString(1);
+		//String email = rs.getString(2);
 		
 		
 		
 		out.println("<html><header><div align=\"center\">");
-		out.println("User: "+user+"<br>");
-		out.println("Email: "+email+"<br>");
+		//out.println("User: "+user+"<br>");
+		//out.println("Email: "+email+"<br>");
 		out.println("</div><header>");
 		Template temp= null;
 		//BufferedReader fl= null;
