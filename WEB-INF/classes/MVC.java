@@ -34,9 +34,14 @@ public class MVC extends HttpServlet {
 			String page = request.getServletPath();
 			if(page.equals("login") || page.equals(""))
 				loginPage(request, out);
+			else{
 			if((checkCookies(request) || checkUser(request, response)) && page.contains("select")){
 				createConnections();
 				doPost(request, response);
+			}
+			else{
+				errorPage(request,response);
+			}
 			}
 
 		} catch (Exception e) {
@@ -49,6 +54,13 @@ public class MVC extends HttpServlet {
 			this.generateBook(request,out);
 		}
 		catch (Exception e){e.printStackTrace(out);}
+	}
+	
+	private void errorPage(HttpServletRequest request, HttpServletResponse response){
+		PrintWriter out = response.getWriter();
+		out.println("I ran into an error.");
+		out.println("You requested "+request.getServletPath());
+		/* todo login data if avilable
 	}
 
 
