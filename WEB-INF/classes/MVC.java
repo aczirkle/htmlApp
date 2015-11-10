@@ -56,7 +56,7 @@ public class MVC extends HttpServlet {
 		catch (Exception e){e.printStackTrace(out);}
 	}
 	
-	private void errorPage(HttpServletRequest request, HttpServletResponse response){
+	private void errorPage(HttpServletRequest request, HttpServletResponse response) throws ServletException{
 		PrintWriter out = response.getWriter();
 		out.println("I ran into an error.");
 		out.println("You requested "+request.getServletPath());
