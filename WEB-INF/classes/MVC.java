@@ -363,7 +363,7 @@ public class MVC extends HttpServlet {
 		ArrayList<String> stories = new ArrayList<String>();
 		ResultSet rs = null;
 		rs = st.executeQuery("select text from stories where name='"+name+"'");
-		if(rs.next())
+		if(rs.next()){
 		BufferedReader in = new BufferedReader(new FileReader(rs.getString(1)));
 		String str;
 		StringBuffer buf = new StringBuffer();
