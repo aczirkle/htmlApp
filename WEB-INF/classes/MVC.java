@@ -39,15 +39,18 @@ public class MVC extends HttpServlet {
 			String page = request.getPathInfo();
 			System.out.println("User attempted to access: "+page);
 			if(page.contains("select") && (checkCookies(request) || checkUser(request, response))){
-				doPost(request,response);
+				generatePage(request,response);
 			}
-			if(page.contains("makePage")){
+			if(page.contains("read") && (checkCookies(request) || checkUser(request, response))){
+				generateBook(request,response);
+			}
+			
+		/*	if(page.contains("makePage")){
 				makePage(request, out);
-				//doPost(request,response);
-			}
+			}*/
 			if(page.contains("makeUser")){
 				makeUser(request, response);
-				//doPost(request,response);
+
 			}
 			//String page = request.getServletPath();
 			if(page.contains("login") || page.equals("/"))
@@ -55,7 +58,7 @@ public class MVC extends HttpServlet {
 			/*else{
 			if((checkCookies(request) || checkUser(request, response)) && page.contains("select")){
 				createConnections();
-				doPost(request, response);
+
 			}*/
 
 			//errorPage(request,response);
@@ -63,18 +66,6 @@ public class MVC extends HttpServlet {
 			e.printStackTrace(out);
 			errorPage(request,response);
 		}
-	}
-	
-	/**
-	*	doPost	
-	*	Spliter code for generating the pages
-	*/
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{ 
-		PrintWriter out = response.getWriter();
-		try {
-			this.generateBook(request,out);
-		}
-		catch (Exception e){e.printStackTrace(out);}
 	}
 	
 	/**
