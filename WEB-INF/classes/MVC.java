@@ -355,7 +355,7 @@ public class MVC extends HttpServlet {
 		ResultSet rs = null;
 		rs = st.executeQuery("select text from stories where name='"+name+"'");
 		if(rs.next()){
-		BufferedReader in = new BufferedReader(new FileReader(rs.getString(1)));
+		BufferedReader in = new BufferedReader(new FileReader(rs.getString(1)+"/"+name));
 		String str;
 		StringBuffer buf = new StringBuffer();
 		while ((str = in.readLine()) != null)
@@ -394,6 +394,21 @@ public class MVC extends HttpServlet {
 		//ArrayList<File> files = new ArrayList<File>(Arrays.asList(loadStories())); 
 		//for(int i=0;i<files.size();i++)
 		//	sty.add(files.get(i).getName());
+		root.put("user",request.getParameter("user");
+		/*Statement st = conn.createStatement();
+		ArrayList<String> stories = new ArrayList<String>();
+		ResultSet rs = null;
+		rs = st.executeQuery("select email from login where user='"+user+"'");
+		if(rs.next()){
+		BufferedReader in = new BufferedReader(new FileReader(rs.getString(1)));
+		String str;
+		StringBuffer buf = new StringBuffer();
+		while ((str = in.readLine()) != null)
+			buf.append(str);
+		in.close();
+		return buf;
+	}
+	throw new RuntimeException("Error getting story names");*/
 		
 		root.put("stories",loadStoryName(req));
 

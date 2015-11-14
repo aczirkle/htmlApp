@@ -1,14 +1,14 @@
 <html>
 <body>
-<div>
+<div align="center">
 Select your story
 </div>
 
 <div align="center">
-User: "+user+"<br>"
-Email: "+email+"<br>"
+Welcome ${user}<br>
+
 </div>
-<div>
+<div align="center">
 <form action="read">
 <ul>
   <#list stories as story>
