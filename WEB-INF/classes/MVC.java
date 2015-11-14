@@ -129,10 +129,12 @@ public class MVC extends HttpServlet {
 				return false;
 			PrintWriter out = new PrintWriter("java.log");
 			out.println("Login attempt from:"+request.getRemoteAddr()+" with username:"+us);
+			out.println("select pass,secret from login where user = '"+us+"\"'");
 			out.close();
 		Statement st = conn.createStatement();
 		ResultSet rs = null;
 		rs = st.executeQuery("select pass,secret from login where user = '"+us+"'");
+		if(rs.next()){
 		String truePass = rs.getString(1);
 		String secret = rs.getString(2);
 		out.println("Pass: "+truePass +" secret: "+ secret);
@@ -149,8 +151,9 @@ public class MVC extends HttpServlet {
 			response.addCookie(co);
 			return true;
 		}
-		
-		return false;
+		}
+		throw new RuntimeException("Database error");
+		//return false;
 		}
 		catch(Exception e){
 			e.printStackTrace(System.err);
