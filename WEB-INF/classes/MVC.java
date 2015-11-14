@@ -39,10 +39,10 @@ public class MVC extends HttpServlet {
 			String page = request.getPathInfo();
 			System.out.println("User attempted to access: "+page);
 			if(page.contains("select") && (checkCookies(request) || checkUser(request, response))){
-				generatePage(request,response);
+				generatePage(request,out);
 			}
 			if(page.contains("read") && (checkCookies(request) || checkUser(request, response))){
-				generateBook(request,response);
+				generateBook(request,out);
 			}
 			
 		/*	if(page.contains("makePage")){
