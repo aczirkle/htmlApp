@@ -394,7 +394,7 @@ public class MVC extends HttpServlet {
 		//ArrayList<File> files = new ArrayList<File>(Arrays.asList(loadStories())); 
 		//for(int i=0;i<files.size();i++)
 		//	sty.add(files.get(i).getName());
-		root.put("user",request.getParameter("user");
+		root.put("user",request.getParameter("user"));
 		/*Statement st = conn.createStatement();
 		ArrayList<String> stories = new ArrayList<String>();
 		ResultSet rs = null;
