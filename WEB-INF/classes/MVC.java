@@ -348,6 +348,7 @@ public class MVC extends HttpServlet {
 		ResultSetMetaData meta = rs.getMetaData();
 		int colCount = meta.getColumnCount();
 		for (int col=1; col <= colCount; col++) {
+			if(rs.next())
 			stories.add(rs.getString(col));
 		}
 		return stories;
@@ -363,7 +364,7 @@ public class MVC extends HttpServlet {
 		ResultSet rs = null;
 		String us = request.getParameter("user");
 		rs = st.executeQuery("select text from stories where name='"+name+"'");
-
+		rs.next();
 		BufferedReader in = new BufferedReader(new FileReader(rs.getString(1)));
 		String str;
 		StringBuffer buf = new StringBuffer();
