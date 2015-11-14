@@ -373,7 +373,6 @@ public class MVC extends HttpServlet {
 		return buf;
 	}
 	throw new RuntimeException("Error getting story names");
-	return null;
 		//return stories;
 
 	
