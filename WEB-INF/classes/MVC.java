@@ -362,9 +362,8 @@ public class MVC extends HttpServlet {
 		Statement st = conn.createStatement();
 		ArrayList<String> stories = new ArrayList<String>();
 		ResultSet rs = null;
-		String us = request.getParameter("user");
 		rs = st.executeQuery("select text from stories where name='"+name+"'");
-		rs.next();
+		if(rs.next())
 		BufferedReader in = new BufferedReader(new FileReader(rs.getString(1)));
 		String str;
 		StringBuffer buf = new StringBuffer();
@@ -372,7 +371,9 @@ public class MVC extends HttpServlet {
 			buf.append(str);
 		in.close();
 		return buf;
-		
+	}
+	throw new RuntimeException("Error getting story names");
+	return null;
 		//return stories;
 
 	
