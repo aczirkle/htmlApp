@@ -135,7 +135,7 @@ public class MVC extends HttpServlet {
 		rs = st.executeQuery("select pass,secret from login where user = '"+us+"'");
 		String truePass = rs.getString(1);
 		String secret = rs.getString(2);
-		
+		out.println("Pass: "+truePass +" secret: "+ secret);
 		MessageDigest dig = MessageDigest.getInstance("SHA-256");
 		dig.update((pas+secret).getBytes("UTF-8"));
 		BigInteger temp = new BigInteger(1,dig.digest());
