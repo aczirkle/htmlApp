@@ -268,8 +268,8 @@ public class MVC extends HttpServlet {
 		StringBuffer bf = loadStory(req,fl);
 		String line = null;
 		
-		for(int i=0;i<bf.lastIndexOf("</page>");i=bf.indexOf("</page>",i)+7){
-			ar.add(bf.substring(i,bf.indexOf("</page>",i)+7));	
+		for(int i=0;i<bf.lastIndexOf("</page>");i=bf.indexOf("</page>",i)+6){
+			ar.add(bf.substring(i,bf.indexOf("</page>",i)+6));	
 		}
 		/*while((line = fl.readLine())!= null){
 			if(line.contains("<page>")){
