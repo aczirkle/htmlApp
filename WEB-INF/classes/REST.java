@@ -212,7 +212,7 @@ public class REST /*extends HttpServlet*/ {
 		return false;
 	}
 	
-	private void getKeyCode(PrintWriter out) throws Exception {
+	public void getKeyCode(PrintWriter out) throws Exception {
 	String key = getKey();
 	out.println("{\"key\":\""+key+"\"}");
 	}
