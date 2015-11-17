@@ -21,15 +21,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 
-public class REST extends HttpServlet {
+public class REST /*extends HttpServlet*/ {
 	final String user="383-sql";
 	final String pass="test123";
 	Connection conn = null;
 	
-	public REST(){
-		
-		
-	}
+
 	/**
 	* Organizer code, it checks to see where the user is attepmting to access and directs them.
 	*
@@ -78,7 +75,7 @@ public class REST extends HttpServlet {
 	}
 	
 
-	private void getUser(HttpServletRequest request, PrintWriter out){
+	public void getUser(PrintWriter out){
 		try{
 		createConnections();
 		Statement st = conn.createStatement();
@@ -98,7 +95,7 @@ public class REST extends HttpServlet {
 		
 	}
 
-	private void storyList(HttpServletRequest req, PrintWriter out) throws Exception{
+	public void storyList(PrintWriter out) throws Exception{
 		
 		createConnections();
 		Statement st = conn.createStatement();
@@ -123,7 +120,7 @@ public class REST extends HttpServlet {
 		out.print("]}");
 	}
 	
-	private void storyLoad(){
+	public void storyLoad(PrintWriter out){
 		
 	//	for(int i=0;i<names.size();i++){
 	//		loadStory(req,name);
@@ -134,12 +131,12 @@ public class REST extends HttpServlet {
 	* loadStoryName
 	* Provides a list of the stories in the database
 	*/
-	private ArrayList<String> loadStoryName(HttpServletRequest request) throws Exception{
+	private ArrayList<String> loadStoryName() throws Exception{
 		
 		Statement st = conn.createStatement();
 		ArrayList<String> stories = new ArrayList<String>();
 		ResultSet rs = null;
-		String us = request.getParameter("user");
+	
 		rs = st.executeQuery("select name from stories");
 		ResultSetMetaData meta = rs.getMetaData();
 		int colCount = meta.getColumnCount();
@@ -154,7 +151,7 @@ public class REST extends HttpServlet {
 	* loadStory
 	* Loads the text and page of the story
 	*/
-	private StringBuffer loadStory(HttpServletRequest request,String name) throws SQLException, Exception{
+	public StringBuffer loadStory(String name) throws SQLException, Exception{
 		Statement st = conn.createStatement();
 		ArrayList<String> stories = new ArrayList<String>();
 		ResultSet rs = null;
@@ -169,9 +166,6 @@ public class REST extends HttpServlet {
 		return buf;
 	}
 	throw new RuntimeException("Error getting story names");
-		//return stories;
-
-	
 	}
 	
 	private int loadStoryPageNum(String name) throws SQLException, Exception{
@@ -218,7 +212,7 @@ public class REST extends HttpServlet {
 		return false;
 	}
 	
-	private void UnirestKeycode(HttpServletRequest req, PrintWriter out) throws Exception {
+	private void getKeyCode(PrintWriter out) throws Exception {
 	String key = getKey();
 	out.println("{\"key\":\""+key+"\"}");
 	}

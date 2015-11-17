@@ -38,6 +38,28 @@ public class MVC extends HttpServlet {
 		try {
 			String page = request.getPathInfo();
 			System.out.println("User attempted to access: "+page);
+			REST rest = new REST();
+			try {
+				
+				
+				if(page.contains("getKey"))
+					rest.getKeyCode(out);
+				if(checkKey(page)){
+					if(page.contains("story/"))
+						rest.storyLoad(out);
+				if(page.contains("storylist"))
+					rest.storyList(out);
+				else{
+					if(page.contains("user"))
+						rest.getUser(out);
+					else{
+						throw new Exception("No key specified");
+					}
+				}}
+			} catch (Exception e) {
+				e.printStackTrace(out);
+				rest.error(out);
+			}
 			if(page.contains("select") && (checkCookies(request) || checkUser(request, response))){
 				generatePage(request,out);
 			}
@@ -45,7 +67,7 @@ public class MVC extends HttpServlet {
 				generateBook(request,out);
 			}
 			
-		/*	if(page.contains("makePage")){
+			/*if(page.contains("makePage")){
 				makePage(request, out);
 			}*/
 			if(page.contains("makeUser")){
