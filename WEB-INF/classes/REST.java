@@ -31,7 +31,7 @@ public class REST /*extends HttpServlet*/ {
 	* Organizer code, it checks to see where the user is attepmting to access and directs them.
 	*
 	*/
-	protected void doGet(HttpServletRequest request,
+	/*protected void doGet(HttpServletRequest request,
 		HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
 		
@@ -60,7 +60,7 @@ public class REST /*extends HttpServlet*/ {
 			error(out);
 		}
 		
-	}
+	}*/
 	
 
 
