@@ -38,7 +38,7 @@ public class REST extends HttpServlet {
 		try {
 			String page = request.getPathInfo();
 			System.out.println("User attempted to access: "+page);
-			if(page.contains("getKey")
+			if(page.contains("getKey"))
 				UnirestKeycode(request,out);
 			
 			
@@ -81,18 +81,18 @@ public class REST extends HttpServlet {
 		Statement st = conn.createStatement();
 		ResultSet rs = null;
 		rs = st.executeQuery("select user from login");
-		ArrayList<String> ar = ArrayList<String>();
+		ArrayList<String> ar = new ArrayList<String>();
 		while(rs.next()){
 			ar.add(rs.getString(1));		
 		}
 		for(int i=0;i<ar.size();i++){
 			out.print("{\"user\":\""+ar.at(i)+"\"}");
 		}
+		}
 		catch(Exception e){
 			e.printStackTrace(System.err);
 		}
 		
-	}
 	}
 
 	private void storyList(HttpServletRequest req, PrintWriter out) throws Exception{
@@ -100,7 +100,7 @@ public class REST extends HttpServlet {
 		createConnections();
 		
 		rs = st.executeQuery("select title from stories");
-		ArrayList<String> ar = ArrayList<String>();
+		ArrayList<String> ar = new ArrayList<String>();
 		while(rs.next()){
 			ar.add(rs.getString(1));		
 		}
@@ -206,7 +206,7 @@ public class REST extends HttpServlet {
 
 	private boolean checkKey(String page){
 		String key = getKey();
-		if(page.contains(key)
+		if(page.contains(key))
 			return true;
 		return false;
 	}
