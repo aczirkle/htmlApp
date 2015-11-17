@@ -26,7 +26,10 @@ public class REST extends HttpServlet {
 	final String pass="test123";
 	Connection conn = null;
 	
-	
+	public REST(){
+		
+		
+	}
 	/**
 	* Organizer code, it checks to see where the user is attepmting to access and directs them.
 	*
@@ -201,8 +204,11 @@ public class REST extends HttpServlet {
 	throw new RuntimeException("Error getting story names");	
 	}
 	
-	private void error(PrintWriter out) throws Exception{
+	private void error(PrintWriter out){
+		try{
 		out.println("{\"error\":\"invalid request - no API specified\"}");		
+		}
+		catch(Exception e){ e.printStackTrace();}
 	}
 
 	private boolean checkKey(String page){
@@ -216,7 +222,7 @@ public class REST extends HttpServlet {
 	String key = getKey();
 	out.println("{\"key\":\""+key+"\"}");
 	}
-	private String getKey(){
+	private String getKey() throws Exception{
 		String ti = formatTime(System.currentTimeMillis());
 		MessageDigest dig = MessageDigest.getInstance("SHA-256");
 		dig.update(ti.getBytes("UTF-8"));
