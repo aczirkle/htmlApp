@@ -106,7 +106,7 @@ public class REST extends HttpServlet {
 			ar.add(rs.getString(1));		
 		}
 
-		StringBuffer bf = loadStory(req,fl);
+		//StringBuffer bf = loadStory(req,fl);
 		String line = null;
 		
 		out.print("{\"StoryList\":[");
