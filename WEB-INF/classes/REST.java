@@ -211,7 +211,7 @@ public class REST extends HttpServlet {
 		catch(Exception e){ e.printStackTrace();}
 	}
 
-	private boolean checkKey(String page){
+	private boolean checkKey(String page) throws Exception{
 		String key = getKey();
 		if(page.contains(key))
 			return true;
