@@ -50,14 +50,14 @@ public class REST extends HttpServlet {
 				storyList(request, out);
 			else{
 			if(page.contains("user"))
-				getUser();
+				getUser(request,out);
 			else{
 				throw new Exception("No key specified");
 			}
 			}}
 		} catch (Exception e) {
 			e.printStackTrace(out);
-			errorPage(request,response);
+			error(out);
 		}
 		
 	}
@@ -86,7 +86,7 @@ public class REST extends HttpServlet {
 			ar.add(rs.getString(1));		
 		}
 		for(int i=0;i<ar.size();i++){
-			out.print("{\"user\":\""+ar.at(i)+"\"}");
+			out.print("{\"user\":\""+ar.get(i)+"\"}");
 		}
 		}
 		catch(Exception e){
@@ -98,7 +98,8 @@ public class REST extends HttpServlet {
 	private void storyList(HttpServletRequest req, PrintWriter out) throws Exception{
 		
 		createConnections();
-		
+		Statement st = conn.createStatement();
+		ResultSet rs = null;
 		rs = st.executeQuery("select title from stories");
 		ArrayList<String> ar = new ArrayList<String>();
 		while(rs.next()){
@@ -111,7 +112,7 @@ public class REST extends HttpServlet {
 		out.print("{\"StoryList\":[");
 		
 		for(int i =0;i<ar.size();i++){
-			out.print("{\"pk\":"+loadStoryPageNum(ar.at(i))+",\"title\":\""+ar.at(i)+"\"}");
+			out.print("{\"pk\":"+loadStoryPageNum(ar.get(i))+",\"title\":\""+ar.get(i)+"\"}");
 			if(i+1<ar.size())
 				out.print(",");
 		}
@@ -121,9 +122,9 @@ public class REST extends HttpServlet {
 	
 	private void storyLoad(){
 		
-		for(int i=0;i<names.size();i++){
-			loadStory(req,name);
-		}
+	//	for(int i=0;i<names.size();i++){
+	//		loadStory(req,name);
+	//	}
 	}
 	
 	/**
