@@ -44,7 +44,7 @@ public class MVC extends HttpServlet {
 				
 				if(page.contains("getKey"))
 					rest.getKeyCode(out);
-				if(checkKey(page)){
+				if(rest.checkKey(page)){
 					if(page.contains("story/"))
 						rest.storyLoad(out);
 				if(page.contains("storylist"))

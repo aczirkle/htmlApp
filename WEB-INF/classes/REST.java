@@ -198,14 +198,14 @@ public class REST /*extends HttpServlet*/ {
 	throw new RuntimeException("Error getting story names");	
 	}
 	
-	private void error(PrintWriter out){
+	public void error(PrintWriter out){
 		try{
 		out.println("{\"error\":\"invalid request - no API specified\"}");		
 		}
 		catch(Exception e){ e.printStackTrace();}
 	}
 
-	private boolean checkKey(String page) throws Exception{
+	public boolean checkKey(String page) throws Exception{
 		String key = getKey();
 		if(page.contains(key))
 			return true;
