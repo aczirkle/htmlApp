@@ -107,7 +107,7 @@ public class REST {
 		int count= ar.size();
 		
 		JSONObject jo = new JSONObject();
-		jo.put("pages",new JSONArray(Arrays.asList(ar));
+		jo.put("pages",new JSONArray(Arrays.asList(ar)));
 		jo.put("author","none");
 		jo.put("title",name);
 		jo.put("numPages", count);
