@@ -100,7 +100,7 @@ public class REST {
 			buf.append(str);
 		in.close();
 		
-		ArrayList<String> ar = new ArrayList<String>();
+		List<String> ar = new ArrayList<String>();
 		for(int i=0;i<buf.lastIndexOf("</page>");i=buf.indexOf("</page>",i)+6){
 			ar.add(buf.substring(i,buf.indexOf("</page>",i)+6));	
 		}
