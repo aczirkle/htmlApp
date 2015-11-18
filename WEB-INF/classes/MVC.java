@@ -48,7 +48,7 @@ public class MVC extends HttpServlet {
 						rest.storyList(out);
 					else{
 						if(page.contains("story"))
-							rest.storyLoad(out);
+							rest.storyLoad(out, page);
 						else{
 							if(page.contains("user"))
 								rest.getUser(out);

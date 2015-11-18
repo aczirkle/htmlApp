@@ -120,11 +120,44 @@ public class REST /*extends HttpServlet*/ {
 		out.print("]}");
 	}
 	
-	public void storyLoad(PrintWriter out){
+	public void storyLoad(PrintWriter out, String page) throws Exception{
+		String names= page.substring(page.lastIndexOf('/'));
+		Statement st = conn.createStatement();
+		ArrayList<String> stories = new ArrayList<String>();
+		ResultSet rs = null;
+		rs = st.executeQuery("select text from stories where name='"+name+"'");
+		if(rs.next()){
+		BufferedReader in = new BufferedReader(new FileReader(rs.getString(1)+"/"+name));
+		String str;
+		StringBuffer buf = new StringBuffer();
+		while ((str = in.readLine()) != null)
+			buf.append(str);
+		in.close();
 		
-	//	for(int i=0;i<names.size();i++){
-	//		loadStory(req,name);
-	//	}
+		Arraylist<String> ar = new Arraylist<String>();
+		int count=0;
+		for(int i=0;i<buf.lastIndexOf("</page>");i=buf.indexOf("</page>",i)+6){
+			ar.add(buf.substring(i,bf.indexOf("</page>",i)+6));	
+		}
+		
+		count= ar.size();
+		
+		JSONObject jo = new JSONObject();
+		jo.put("pages",new JSONArray(ar));
+		jo.put("author","none");
+		jo.put("title",name);
+		jo.put("numPages");
+		out.println(jo.toString());
+		//for(int i =0;i<count;i++){
+			
+		//}
+		
+	}
+	throw new RuntimeException("Error getting story names");
+		//return stories;
+
+	
+	}
 	}
 	
 	/**
