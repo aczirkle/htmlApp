@@ -121,7 +121,7 @@ public class REST /*extends HttpServlet*/ {
 	}
 	
 	public void storyLoad(PrintWriter out, String page) throws Exception{
-		String names= page.substring(page.lastIndexOf('/'));
+		String name= page.substring(page.lastIndexOf('/'));
 		Statement st = conn.createStatement();
 		ArrayList<String> stories = new ArrayList<String>();
 		ResultSet rs = null;
@@ -137,7 +137,7 @@ public class REST /*extends HttpServlet*/ {
 		ArrayList<String> ar = new ArrayList<String>();
 		int count=0;
 		for(int i=0;i<buf.lastIndexOf("</page>");i=buf.indexOf("</page>",i)+6){
-			ar.add(buf.substring(i,bf.indexOf("</page>",i)+6));	
+			ar.add(buf.substring(i,buf.indexOf("</page>",i)+6));	
 		}
 		
 		int count= ar.size();
