@@ -148,7 +148,7 @@ public class REST /*extends HttpServlet*/ {
 		jo.put("title",name);
 		jo.put("numPages", count);
 		out.println(jo.toString());
-	
+	}
 	/**
 	* loadStoryName
 	* Provides a list of the stories in the database
