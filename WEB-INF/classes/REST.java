@@ -100,15 +100,15 @@ public class REST {
 			buf.append(str);
 		in.close();
 		
-		List<String> ar = new ArrayList<String>();
+		ArrayList<String> ar = new ArrayList<String>();
 		for(int i=0;i<buf.lastIndexOf("</page>");i=buf.indexOf("</page>",i)+6){
 			ar.add(buf.substring(i,buf.indexOf("</page>",i)+6));	
 		}
-		
+		out.println(buf.toString());
 		int count= ar.size();
 		
 		JSONObject jo = new JSONObject();
-		jo.put("pages",JSONArray.fromObject(ar));
+		jo.put("pages",new JSONArray(ar));
 		jo.put("author","none");
 		jo.put("title",name);
 		jo.put("numPages", count);
