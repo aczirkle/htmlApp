@@ -86,11 +86,11 @@ public class REST {
 	
 	public void storyLoad(PrintWriter out, String page) throws Exception{
 		createConnections();
-		String name= page.substring(page.lastIndexOf('/'));
+		String name= page.substring(page.lastIndexOf('/')+1);
 		Statement st = conn.createStatement();
 		ArrayList<String> stories = new ArrayList<String>();
 		ResultSet rs = null;
-		out.println("selecting a story named: "+name);
+		//out.println("selecting a story named: "+name);
 		rs = st.executeQuery("select text from stories where name='"+name+"'");
 		rs.next();
 		BufferedReader in = new BufferedReader(new FileReader(rs.getString(1)+"/"+name));
