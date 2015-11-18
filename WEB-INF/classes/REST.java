@@ -90,6 +90,7 @@ public class REST {
 		Statement st = conn.createStatement();
 		ArrayList<String> stories = new ArrayList<String>();
 		ResultSet rs = null;
+		out.println("selecting a story named: "+name);
 		rs = st.executeQuery("select text from stories where name='"+name+"'");
 		rs.next();
 		BufferedReader in = new BufferedReader(new FileReader(rs.getString(1)+"/"+name));
