@@ -49,11 +49,13 @@ public class MVC extends HttpServlet {
 					else{
 						if(page.contains("story"))
 							rest.storyLoad(out);
-					}
-					if(page.contains("user"))
-						rest.getUser(out);
-					else{
-						throw new Exception("No key specified");
+						else{
+							if(page.contains("user"))
+								rest.getUser(out);
+							else{
+								throw new Exception("No key specified");
+							}
+						}
 					}
 				}
 			} catch (Exception e) {
