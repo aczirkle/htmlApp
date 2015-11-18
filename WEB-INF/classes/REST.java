@@ -100,7 +100,7 @@ public class REST /*extends HttpServlet*/ {
 		createConnections();
 		Statement st = conn.createStatement();
 		ResultSet rs = null;
-		rs = st.executeQuery("select title from stories");
+		rs = st.executeQuery("select name from stories");
 		ArrayList<String> ar = new ArrayList<String>();
 		while(rs.next()){
 			ar.add(rs.getString(1));		
