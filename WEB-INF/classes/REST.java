@@ -104,11 +104,10 @@ public class REST {
 		for(int i=0;i<buf.lastIndexOf("</page>");i=buf.indexOf("</page>",i)+6){
 			ar.add(buf.substring(i,buf.indexOf("</page>",i)+6));	
 		}
-		out.println(buf.toString());
 		int count= ar.size();
 		
 		JSONObject jo = new JSONObject();
-		jo.put("pages",new JSONArray(ar));
+		jo.put("pages",new JSONArray(Arrays.asList(ar));
 		jo.put("author","none");
 		jo.put("title",name);
 		jo.put("numPages", count);
