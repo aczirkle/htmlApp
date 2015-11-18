@@ -19,50 +19,14 @@ import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import org.json.*;
 
 
-public class REST /*extends HttpServlet*/ {
+public class REST {
 	final String user="383-sql";
 	final String pass="test123";
 	Connection conn = null;
 	
-
-	/**
-	* Organizer code, it checks to see where the user is attepmting to access and directs them.
-	*
-	*/
-	/*protected void doGet(HttpServletRequest request,
-		HttpServletResponse response) throws ServletException, IOException {
-		PrintWriter out = response.getWriter();
-		
-		try {
-			String page = request.getPathInfo();
-			System.out.println("User attempted to access: "+page);
-			if(page.contains("getKey"))
-				UnirestKeycode(request,out);
-			
-			
-			
-			if(checkKey(page)){
-				if(page.contains("story/"))
-					storyLoad();
-			if(page.contains("storylist"))
-				storyList(request, out);
-			else{
-			if(page.contains("user"))
-				getUser(request,out);
-			else{
-				throw new Exception("No key specified");
-			}
-			}}
-		} catch (Exception e) {
-			e.printStackTrace(out);
-			error(out);
-		}
-		
-	}*/
-	
-
 
 	/**
 	*Create connection to the the database
@@ -121,6 +85,7 @@ public class REST /*extends HttpServlet*/ {
 	}
 	
 	public void storyLoad(PrintWriter out, String page) throws Exception{
+		createConnections();
 		String name= page.substring(page.lastIndexOf('/'));
 		Statement st = conn.createStatement();
 		ArrayList<String> stories = new ArrayList<String>();
@@ -135,7 +100,6 @@ public class REST /*extends HttpServlet*/ {
 		in.close();
 		
 		ArrayList<String> ar = new ArrayList<String>();
-		int count=0;
 		for(int i=0;i<buf.lastIndexOf("</page>");i=buf.indexOf("</page>",i)+6){
 			ar.add(buf.substring(i,buf.indexOf("</page>",i)+6));	
 		}
