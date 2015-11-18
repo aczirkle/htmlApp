@@ -134,7 +134,7 @@ public class REST /*extends HttpServlet*/ {
 			buf.append(str);
 		in.close();
 		
-		Arraylist<String> ar = new Arraylist<String>();
+		ArrayList<String> ar = new ArrayList<String>();
 		int count=0;
 		for(int i=0;i<buf.lastIndexOf("</page>");i=buf.indexOf("</page>",i)+6){
 			ar.add(buf.substring(i,bf.indexOf("</page>",i)+6));	
