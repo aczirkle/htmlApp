@@ -126,7 +126,7 @@ public class REST /*extends HttpServlet*/ {
 		ArrayList<String> stories = new ArrayList<String>();
 		ResultSet rs = null;
 		rs = st.executeQuery("select text from stories where name='"+name+"'");
-		if(rs.next()){
+		rs.next();
 		BufferedReader in = new BufferedReader(new FileReader(rs.getString(1)+"/"+name));
 		String str;
 		StringBuffer buf = new StringBuffer();
@@ -140,25 +140,14 @@ public class REST /*extends HttpServlet*/ {
 			ar.add(buf.substring(i,bf.indexOf("</page>",i)+6));	
 		}
 		
-		count= ar.size();
+		int count= ar.size();
 		
 		JSONObject jo = new JSONObject();
 		jo.put("pages",new JSONArray(ar));
 		jo.put("author","none");
 		jo.put("title",name);
-		jo.put("numPages");
+		jo.put("numPages", count);
 		out.println(jo.toString());
-		//for(int i =0;i<count;i++){
-			
-		//}
-		
-	}
-	throw new RuntimeException("Error getting story names");
-		//return stories;
-
-	
-	}
-	}
 	
 	/**
 	* loadStoryName
