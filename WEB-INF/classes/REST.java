@@ -41,6 +41,7 @@ public class REST {
 		String title = j.getString("title");
 		String pa = j.getString("page");
 		Statement st = conn.createStatement();
+		System.out.println("insert into stories values ('"+title+".sty','webapps/htmlApp')");
 		st.executeUpdate("insert into stories values ('"+title+".sty','webapps/htmlApp')");
 		BufferedWriter bw = new BufferedWriter(new FileWriter("webapps/htmlApp/"+title+".sty"));
 		bw.write("<page>"+pa+"</page>");
@@ -62,7 +63,7 @@ public class REST {
 	}
 	
 	/**
-	*	retrevies the user from the login as a rest call
+	*	retrieves the user from the login as a rest call
 	*
 	**/
 	public void getUser(PrintWriter out){
