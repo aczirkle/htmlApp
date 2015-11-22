@@ -1,3 +1,4 @@
+
 <html>
 <head>
 <title>Create</title>
@@ -48,7 +49,8 @@ $(document).ready(function(){
 				success:function(result) {
 					$("#msg").html("Title updated");
 					  $("#editForm").css("visibility","hidden");
-					  $("#pk").val("");
+					  $("#title").val("");
+					  $("#page").val("");
 				},error:function(xhr,result,error){
 					var json = xhr.responseJSON;
 					$("#msg").html("<h1>" + json.error + "</h1>");
@@ -67,7 +69,7 @@ Create Story
 <form id='create'>
 Name: <input type='text' id='title'>
 <br>
-Page: <input type='text' id='page' style="width: 200px;height: 200px;">
+Page: <textarea type='text' id='page' rows="1" cols="1" style="width: 200px;height: 200px;word-wrap: break-word;"></textarea>
 <br>
 <input type='submit'>
 </form>

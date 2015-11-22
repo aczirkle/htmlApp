@@ -52,6 +52,7 @@ public class REST {
 		}
 		catch(Exception e){
 			e.printStackTrace(System.err);
+			response.setStatus(400);
 		}
 	}
 	
