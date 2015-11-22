@@ -28,7 +28,7 @@ public class REST {
 	Connection conn = null;
 	
 
-	public void createStory(HttpServletRequest request){
+	public void createStory(HttpServletRequest request, HttpServletResponse response){
 		try{
 		createConnections();
 		
@@ -48,6 +48,7 @@ public class REST {
 		BufferedWriter bw = new BufferedWriter(new FileWriter("webapps/htmlApp/"+title+".sty"));
 		bw.write("<page>"+pa+"</page>");
 		bw.close();
+		response.setStatus(200);
 		}
 		catch(Exception e){
 			e.printStackTrace(System.err);

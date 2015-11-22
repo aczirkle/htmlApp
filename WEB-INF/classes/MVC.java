@@ -121,7 +121,7 @@ public class MVC extends HttpServlet {
 			REST rest = new REST();
 			try {	
 				if(page.contains("create"))
-					rest.createStory(request);
+					rest.createStory(request,response);
 				else
 					throw new Exception("No key specified");
 			} catch (Exception e) {
