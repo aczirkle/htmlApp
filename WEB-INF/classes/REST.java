@@ -38,6 +38,7 @@ public class REST {
 		while ((l = br.readLine()) != null) {
 			sb.append(l);
 		}
+		System.err.println(sb.toString());
 		JSONObject j = new JSONObject(sb.toString());
 		String title = j.getString("title");
 		String pa = j.getString("page");
