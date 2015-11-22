@@ -21,20 +21,20 @@ var key = "freekey";
 var storepk=-1;
 
 $(document).ready(function(){
-	$("#create").css("visibility","hidden");
-	$("#pickstory").submit(function(evt){
-		evt.preventDefault();
-		pk=$("#pk").val();
-		if (pk>0) {
-			storepk=pk;
+	//$("#create").css("visibility","hidden");
+	//$("#pickstory").submit(function(evt){
+	//	evt.preventDefault();
+		//pk=$("#pk").val();
+		//if (pk>0) {
+		//	storepk=pk;
 			 // $.getJSON("/htmlApp/rest/create/" + pk ,function(result){
 			 // console.log(result.title);
-			  $("#create").css("visibility","visible");
+		//	  $("#create").css("visibility","visible");
 			 // $("#title").val(result.title);
 
-				  });
-		}
-	});
+				//  });
+		//}
+	//});
 	$("#create").submit(function(evt){
 		evt.preventDefault();
 		var newTitle=$("#title").val();
@@ -42,8 +42,8 @@ $(document).ready(function(){
 		page=$("#page").val();
 		$.ajax({
 				type:"POST",
-				url:"/htmlApp/rest/"+key+"/create",
-				data: "{\"pages\":" + page + ",\"title\":\"" + newTitle + "\"}",
+				url:"http://zirkleac.383.csi.miamioh.edu:8080/htmlApp/htmlApp/rest/"+key+"/create",
+				data: "{\"page\":\"" + page + "\",\"title\":\"" + newTitle + "\"}",
 				dataType: "json",
 				success:function(result) {
 					$("#msg").html("Title updated");
@@ -62,17 +62,13 @@ $(document).ready(function(){
 </head>
 <body>
 Create Story
-<div id="startForm">
-<form id='pickstory'>
-New Story Name: <input type='text' id='pk'>
-<input type='submit'>
-</form>
-</div>
+<br>
 <div id='create'>
 <form id='create'>
 Name: <input type='text' id='title'>
-
-Page: <input type='text' id='page'>
+<br>
+Page: <input type='text' id='page' style="width: 200px;height: 200px;">
+<br>
 <input type='submit'>
 </form>
 </div>
