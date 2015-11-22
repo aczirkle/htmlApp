@@ -28,7 +28,8 @@ public class REST {
 	Connection conn = null;
 	
 
-	public void createStory(HttpServletRequest request) throws Exception{
+	public void createStory(HttpServletRequest request){
+		try{
 		createConnections();
 		
 		BufferedReader br = request.getReader();
@@ -41,11 +42,15 @@ public class REST {
 		String title = j.getString("title");
 		String pa = j.getString("page");
 		Statement st = conn.createStatement();
-		System.out.println("insert into stories values ('"+title+".sty','webapps/htmlApp')");
+		//System.out.println("insert into stories values ('"+title+".sty','webapps/htmlApp')");
 		st.executeUpdate("insert into stories values ('"+title+".sty','webapps/htmlApp')");
 		BufferedWriter bw = new BufferedWriter(new FileWriter("webapps/htmlApp/"+title+".sty"));
 		bw.write("<page>"+pa+"</page>");
 		bw.close();
+		}
+		catch(Exception e){
+			e.printStackTrace(System.err);
+		}
 	}
 	
 
