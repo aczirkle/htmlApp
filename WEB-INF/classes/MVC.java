@@ -53,7 +53,11 @@ public class MVC extends HttpServlet {
 							if(page.contains("user"))
 								rest.getUser(out);
 							else{
-								throw new Exception("No key specified");
+								if(page.contains("create"))
+									rest.getUser(out);
+								else{
+									throw new Exception("No key specified");
+								}
 							}
 						}
 					}
@@ -440,6 +444,23 @@ public class MVC extends HttpServlet {
 		
 		Template temp = cfg.getTemplate("select.ftl");
 		temp.process(root, out);
+
+	}
+	
+		
+	/**
+	*Campbest getParts
+	* for getting the compisition of the string
+	*/
+	private String[] getParts(HttpServletRequest request) {
+		try {
+			URL url = new URL(request.getRequestURL().toString());
+			String path = url.getPath();
+			String parts[] = path.split("/");
+			return parts;
+		} catch (Exception err) {
+			return null;
+		}
 
 	}
 

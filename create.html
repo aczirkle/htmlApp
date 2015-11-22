@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+<title>Create</title>
+<style>
+#editForm {
+margin-top: 10px;
+margin-bottom: 10px;
+}
+
+#startForm {
+margin: 10px;
+border: thin solid black;
+width: 200px;
+}
+
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript">
+var key = "5307c98900373bf83b9faccdbb543edfcacc70d86e7ac21dac26b727ff54f325";
+var storepk=-1;
+
+$(document).ready(function(){
+	$("#create").css("visibility","hidden");
+	$("#pickstory").submit(function(evt){
+		evt.preventDefault();
+		pk=$("#pk").val();
+		if (pk>0) {
+			storepk=pk;
+			 // $.getJSON("/htmlApp/rest/create/" + pk ,function(result){
+			 // console.log(result.title);
+			  $("#create").css("visibility","visible");
+			 // $("#title").val(result.title);
+
+				  });
+		}
+	});
+	$("#create").submit(function(evt){
+		evt.preventDefault();
+		var newTitle=$("#title").val();
+		  console.log(newTitle);
+		page=$("#page").val();
+		$.ajax({
+				type:"POST",
+				url:"/htmlApp/rest/"+key+"/create",
+				data: "{\"pages\":" + page + ",\"title\":\"" + newTitle + "\"}",
+				dataType: "json",
+				success:function(result) {
+					$("#msg").html("Title updated");
+					  $("#editForm").css("visibility","hidden");
+					  $("#pk").val("");
+				},error:function(xhr,result,error){
+					var json = xhr.responseJSON;
+					$("#msg").html("<h1>" + json.error + "</h1>");
+				}
+				});
+		  });
+
+});
+
+</script>
+</head>
+<body>
+Create Story
+<div id="startForm">
+<form id='pickstory'>
+New Story Name: <input type='text' id='pk'>
+<input type='submit'>
+</form>
+</div>
+<div id='create'>
+<form id='create'>
+Name: <input type='text' id='title'>
+
+Page: <input type='text' id='page'>
+<input type='submit'>
+</form>
+</div>
+<div id="msg"></div>
+</body>
+</html>

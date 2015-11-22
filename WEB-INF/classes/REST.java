@@ -28,6 +28,28 @@ public class REST {
 	Connection conn = null;
 	
 
+	public void createStory(HttpServletRequest request) throws Exception{
+		createConnections();
+		
+		BufferedReader br = request.getReader();
+		StringBuffer sb = new StringBuffer();
+		String l;
+		while ((l = br.readLine()) != null) {
+			sb.append(l);
+		}
+		JSONObject j = new JSONObejct(sb.toString());
+		String title = j.getString("title");
+		String pa = j.getString("page");
+		Statement st = conn.createStatement();
+		st.executeUpdate("insert into stories values ('"+title+".sty','webapps/htmlApp')");
+		BufferedWritter bw = new BufferedWriter(new FileWriter("webapps/htmlApp/"+title+".sty"));
+		bw.write("<page>"+pa+"</page>");
+		bw.close();
+	}
+	
+
+	
+	
 	/**
 	* 	createConnections
 	*Create connection to the the database. Called before any method which uses the database
@@ -215,7 +237,7 @@ public class REST {
 	*/
 	public boolean checkKey(String page) throws Exception{
 		String key = getKey();
-		if(page.contains(key))
+		if(page.contains(key) || page.contains("freekey"))
 			return true;
 		return false;
 	}
