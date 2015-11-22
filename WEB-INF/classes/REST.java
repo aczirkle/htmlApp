@@ -29,7 +29,8 @@ public class REST {
 	
 
 	/**
-	*Create connection to the the database
+	* 	createConnections
+	*Create connection to the the database. Called before any method which uses the database
 	*
 	*/
 	private void createConnections() throws Exception{
@@ -38,7 +39,10 @@ public class REST {
 		conn = DriverManager.getConnection(url,user,pass);
 	}
 	
-
+	/**
+	*	retrevies the user from the login as a rest call
+	*
+	**/
 	public void getUser(PrintWriter out){
 		try{
 		createConnections();
@@ -58,7 +62,12 @@ public class REST {
 		}
 		
 	}
-
+	
+	/**
+	* storyList
+	* Reterives the list of stories as a REST call
+	*
+	*/
 	public void storyList(PrintWriter out) throws Exception{
 		
 		createConnections();
@@ -83,7 +92,10 @@ public class REST {
 		
 		out.print("]}");
 	}
-	
+	/**
+	* storyLoad
+	* loads the story as a REST call
+	*/
 	public void storyLoad(PrintWriter out, String page) throws Exception{
 		createConnections();
 		String name= page.substring(page.lastIndexOf('/')+1);
@@ -153,7 +165,10 @@ public class REST {
 	}
 	throw new RuntimeException("Error getting story names");
 	}
-	
+	/**
+	*loadStoryPageNum
+	*retreives the number of pages in the story
+	*/
 	private int loadStoryPageNum(String name) throws SQLException, Exception{
 	Statement st = conn.createStatement();
 	ArrayList<String> stories = new ArrayList<String>();
@@ -183,7 +198,10 @@ public class REST {
 	}
 	throw new RuntimeException("Error getting story names");	
 	}
-	
+	/**
+	*error
+	* for failing a REST request 
+	*/
 	public void error(PrintWriter out){
 		try{
 		out.println("{\"error\":\"invalid request - no API specified\"}");		
@@ -191,17 +209,29 @@ public class REST {
 		catch(Exception e){ e.printStackTrace();}
 	}
 
+	/**
+	*checkKey
+	*Checks to see if a provided key is correct
+	*/
 	public boolean checkKey(String page) throws Exception{
 		String key = getKey();
 		if(page.contains(key))
 			return true;
 		return false;
 	}
-	
+	/**
+	* getKeyCode
+	* returns today's keycode
+	*/
 	public void getKeyCode(PrintWriter out) throws Exception {
 	String key = getKey();
 	out.println("{\"key\":\""+key+"\"}");
 	}
+	/**
+	* getKey
+	* returns a key which is a hash of today's date. This was easier than creating a new table
+	* in the database
+	*/
 	private String getKey() throws Exception{
 		String ti = formatTime(System.currentTimeMillis());
 		MessageDigest dig = MessageDigest.getInstance("SHA-256");
@@ -213,6 +243,11 @@ public class REST {
     	}
 		return output;
 	}
+	
+	/**
+	* formatTime
+	* returns the formated time of the system time
+	*/
 	private String formatTime(long t) {
 		DateFormat f = new SimpleDateFormat("MM/dd/yyyy");
 		return f.format(t);
