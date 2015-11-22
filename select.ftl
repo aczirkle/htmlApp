@@ -21,5 +21,11 @@ Welcome ${user}<br>
 <input type="submit" value="Submit">
 </form>
 </div>
+
+
+<form action="create">
+Click to access creating a story
+<input type="submit" value="Submit">
+</form>
 </body>
 </html>

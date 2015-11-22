@@ -55,7 +55,7 @@ public class MVC extends HttpServlet {
 								rest.getUser(out);
 							else{
 								if(page.contains("create"))
-									rest.getUser(out);
+									rest.createStory(out);
 								else{
 									throw new Exception("No key specified");
 								}
@@ -75,6 +75,10 @@ public class MVC extends HttpServlet {
 				generateBook(request,out);
 			}
 			
+			if(page.contains("create") && (checkCookies(request) || checkUser(request, response))){
+				generateBook(request,out);
+			}
+			
 			/*if(page.contains("makePage")){
 				makePage(request, out);
 			}*/
@@ -85,6 +89,7 @@ public class MVC extends HttpServlet {
 			//String page = request.getServletPath();
 			if(page.contains("login") || page.equals("/"))
 				loginPage(request, out);
+			
 			/*else{
 			if((checkCookies(request) || checkUser(request, response)) && page.contains("select")){
 				createConnections();
@@ -108,6 +113,24 @@ public class MVC extends HttpServlet {
 		out.println("You requested "+request.getPathInfo());
 		out.close();
 		/* todo login data if avilable*/
+	}
+	
+	protected void doPost() throws ServletException, IOException{
+		PrintWriter out = response.getWriter();
+		String page = request.getPathInfo();
+		System.out.println("User attempted to access: "+page);
+		if(page.contains("rest")){
+			REST rest = new REST();
+			try {	
+				if(page.contains("create"))
+					rest.createStory(out);
+				else
+					throw new Exception("No key specified");
+			} catch (Exception e) {
+				e.printStackTrace(out);
+				rest.error(out);
+			}
+			}
 	}
 
 

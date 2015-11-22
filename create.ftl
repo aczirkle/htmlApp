@@ -1,4 +1,3 @@
-<!doctype html>
 <html>
 <head>
 <title>Create</title>
@@ -18,7 +17,7 @@ width: 200px;
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script type="text/javascript">
-var key = "5307c98900373bf83b9faccdbb543edfcacc70d86e7ac21dac26b727ff54f325";
+var key = "freekey";
 var storepk=-1;
 
 $(document).ready(function(){
