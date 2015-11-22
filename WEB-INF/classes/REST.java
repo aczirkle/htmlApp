@@ -37,12 +37,12 @@ public class REST {
 		while ((l = br.readLine()) != null) {
 			sb.append(l);
 		}
-		JSONObject j = new JSONObejct(sb.toString());
+		JSONObject j = new JSONObject(sb.toString());
 		String title = j.getString("title");
 		String pa = j.getString("page");
 		Statement st = conn.createStatement();
 		st.executeUpdate("insert into stories values ('"+title+".sty','webapps/htmlApp')");
-		BufferedWritter bw = new BufferedWriter(new FileWriter("webapps/htmlApp/"+title+".sty"));
+		BufferedWriter bw = new BufferedWriter(new FileWriter("webapps/htmlApp/"+title+".sty"));
 		bw.write("<page>"+pa+"</page>");
 		bw.close();
 	}
