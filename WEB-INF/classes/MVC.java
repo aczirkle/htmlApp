@@ -59,7 +59,7 @@ public class MVC extends HttpServlet {
 							}
 						}
 					}
-				}
+				
 			} catch (Exception e) {
 				e.printStackTrace(out);
 				rest.error(out);
