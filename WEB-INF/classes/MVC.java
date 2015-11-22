@@ -54,10 +54,7 @@ public class MVC extends HttpServlet {
 							if(page.contains("user"))
 								rest.getUser(out);
 							else{
-								if(page.contains("create"))
-									rest.createStory(out);
-								else{
-									throw new Exception("No key specified");
+								throw new Exception("No key specified");
 								}
 							}
 						}
@@ -115,7 +112,8 @@ public class MVC extends HttpServlet {
 		/* todo login data if avilable*/
 	}
 	
-	protected void doPost() throws ServletException, IOException{
+	protected void doPost(HttpServletRequest request,
+		HttpServletResponse response) throws ServletException, IOException{
 		PrintWriter out = response.getWriter();
 		String page = request.getPathInfo();
 		System.out.println("User attempted to access: "+page);
@@ -123,7 +121,7 @@ public class MVC extends HttpServlet {
 			REST rest = new REST();
 			try {	
 				if(page.contains("create"))
-					rest.createStory(out);
+					rest.createStory(request);
 				else
 					throw new Exception("No key specified");
 			} catch (Exception e) {
