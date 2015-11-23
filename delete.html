@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+<title>delete</title>
+<style>
+#editForm {
+margin-top: 10px;
+margin-bottom: 10px;
+}
+
+#startForm {
+margin: 10px;
+border: thin solid black;
+width: 500px;
+}
+
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript">
+var key = "freekey";
+var storepk=-1;
+var url  = "http://zirkleac.383.csi.miamioh.edu:8080/htmlApp";
+
+function makeList() {
+		 $.getJSON(url + "/rest/"+key+"/storylist" ,function(result){
+			 for (var i=0,len=result.StoryList.length;i<len;i++) {
+				 $("#stories").append("<option value=\"" + i + "\">" + result.StoryList[i].title +"</option");
+				 console.log(result.StoryList[i].title);
+			 }
+		 });
+}
+
+$(document).ready(function(){
+	makeList();
+
+
+	$("#deleteStory").submit(function(evt){
+		evt.preventDefault();
+		pk=$("#stories").val();
+		if (pk>0) {
+			if(confirm('Are you sure you want to delete '+pk+'')) {
+				  $.ajax({
+					type:"POST",
+					url:url+"/rest/"+key+"/delete",
+					data: "{\"title\":\"" + newTitle + "\"}",
+					dataType: "json",
+					success:function(result) {
+						$("#msg").html("Deleted");
+						  $("#pk").val("");
+					},error:function(xhr,result,error){
+						var json = xhr.responseJSON;
+						$("#msg").html("<h1>" + json.error + "</h1>");
+				}
+				});
+
+			}
+		}
+		});
+});
+
+</script>
+</head>
+<body>
+Edit Story
+<div id="startForm">
+<form id='deleteStory'>
+Story: <select id='stories'></select>
+<input type='submit'>
+</form>
+</div>
+<div id="msg"></div>
+</body>
+</html>

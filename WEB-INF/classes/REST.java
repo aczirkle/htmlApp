@@ -27,6 +27,32 @@ public class REST {
 	final String pass="test123";
 	Connection conn = null;
 	
+	
+	public void deleteStory(HttpServletRequest request, HttpServletResponse response){
+		try{
+		createConnections();
+		
+		BufferedReader br = request.getReader();
+		StringBuffer sb = new StringBuffer();
+		String l;
+		while ((l = br.readLine()) != null) {
+			sb.append(l);
+		}
+		System.err.println(sb.toString());
+		JSONObject j = new JSONObject(sb.toString());
+		String title = j.getString("title");
+
+		Statement st = conn.createStatement();
+		//System.out.println("insert into stories values ('"+title+".sty','webapps/htmlApp')");
+		st.executeUpdate("delete from stories where title='"+title+"'");
+		Files.delete("webapps/htmlApp/"+title);
+		response.setStatus(200);
+		}
+		catch(Exception e){
+			e.printStackTrace(System.err);
+			response.setStatus(400);
+		}
+	}
 
 	public void createStory(HttpServletRequest request, HttpServletResponse response){
 		try{
@@ -56,7 +82,33 @@ public class REST {
 		}
 	}
 	
-
+	public void editStory(HttpServletRequest request, HttpServletResponse response){
+		try{
+		createConnections();
+		
+		BufferedReader br = request.getReader();
+		StringBuffer sb = new StringBuffer();
+		String l;
+		while ((l = br.readLine()) != null) {
+			sb.append(l);
+		}
+		System.err.println(sb.toString());
+		JSONObject j = new JSONObject(sb.toString());
+		String title = j.getString("title");
+		String pa = j.getString("page");
+		Statement st = conn.createStatement();
+		//System.out.println("insert into stories values ('"+title+".sty','webapps/htmlApp')");
+		st.executeUpdate("insert into stories values ('"+title+".sty','webapps/htmlApp')");
+		BufferedWriter bw = new BufferedWriter(new FileWriter("webapps/htmlApp/"+title+".sty"));
+		bw.write("<page>"+pa+"</page>");
+		bw.close();
+		response.setStatus(200);
+		}
+		catch(Exception e){
+			e.printStackTrace(System.err);
+			response.setStatus(400);
+		}
+	}
 	
 	
 	/**

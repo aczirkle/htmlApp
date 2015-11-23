@@ -73,7 +73,7 @@ public class MVC extends HttpServlet {
 			}
 			
 			if(page.contains("create") && (checkCookies(request) || checkUser(request, response))){
-				generateBook(request,out);
+				createPage(request,out);
 			}
 			
 			/*if(page.contains("makePage")){
@@ -98,6 +98,18 @@ public class MVC extends HttpServlet {
 			e.printStackTrace(out);
 			errorPage(request,response);
 		}
+	}
+	
+	
+	private void createPage(HttpServletRequest req, PrintWriter out) throws Exception{
+		
+		/* Create and adjust the configuration singleton */
+		Configuration cfg = new Configuration(Configuration.VERSION_2_3_22);
+		cfg.setDirectoryForTemplateLoading(new File("/opt/jetty/webapps/htmlApp"));
+		Map<String,String> root = new HashMap<String,String>();
+		cfg.setDefaultEncoding("UTF-8");
+		Template temp = cfg.getTemplate("create.ftl");
+		temp.process(root,out);
 	}
 	
 	/**
