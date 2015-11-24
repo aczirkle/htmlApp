@@ -76,6 +76,7 @@ $(document).ready(function(){
 	$("#editname").submit(function(evt){
 		evt.preventDefault();
 		var newTitle=$("#titleEdit").val();
+		var page = $("#pageEdit").val();
 		  console.log(newTitle);
 		$.ajax({
 				type:"POST",
@@ -86,7 +87,7 @@ $(document).ready(function(){
 					$("#msg").html("Title updated");
 					  $("#editForm").css("visibility","hidden");
 					  $("#titleEdit").val("");
-					  $("#page").val("");
+					  $("#pageEdit").val("");
 				},error:function(xhr,result,error){
 					var json = xhr.responseJSON;
 					$("#msg").html("<h1>" + json.error + "</h1>");
@@ -99,7 +100,7 @@ $(document).ready(function(){
 		evt.preventDefault();
 		var newTitle=$("#titleCreate").val();
 		  console.log(newTitle);
-		page=$("#page").val();
+		page=$("#pageCreate").val();
 		$.ajax({
 				type:"POST",
 				url:"http://zirkleac.383.csi.miamioh.edu:8080/htmlApp/rest/"+key+"/create",
@@ -109,7 +110,7 @@ $(document).ready(function(){
 					$("#msg").html("Title updated");
 					  $("#editForm").css("visibility","hidden");
 					  $("#titleCreate").val("");
-					  $("#page").val("");
+					  $("#pageCreate").val("");
 				},error:function(xhr,result,error){
 					var json = xhr.responseJSON;
 					$("#msg").html("<h1>" + json.error + "</h1>");
@@ -163,7 +164,7 @@ Story: <select id='stories'></select>
 <form id='editname'>
 Name: <input type='text' id='titleEdit'>
 <br>
-Page: <textarea type='text' id='page' rows="1" cols="1" style="width: 200px;height: 200px;word-wrap: break-word;"></textarea>
+Page: <textarea type='text' id='pageEdit' rows="1" cols="1" style="width: 200px;height: 200px;word-wrap: break-word;"></textarea>
 <br>
 <input type='submit'>
 </form>
@@ -173,7 +174,7 @@ Page: <textarea type='text' id='page' rows="1" cols="1" style="width: 200px;heig
 <form id='create'>
 Name: <input type='text' id='titleCreate'>
 <br>
-Page: <textarea type='text' id='page' rows="1" cols="1" style="width: 200px;height: 200px;word-wrap: break-word;"></textarea>
+Page: <textarea type='text' id='pageCreate' rows="1" cols="1" style="width: 200px;height: 200px;word-wrap: break-word;"></textarea>
 <br>
 <input type='submit'>
 </form>
