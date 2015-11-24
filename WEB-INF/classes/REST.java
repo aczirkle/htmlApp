@@ -51,6 +51,10 @@ public class REST {
 		//if(!Files.deleteIfExists("webapps/htmlApp/"+title))
 			
 		response.setStatus(HttpServletResponse.SC_OK);
+		JSONObject res= new JSONObject();
+		res.put("response","OK")
+		PrintWriter out = response.getWriter();
+		out.println(res.toString());
 		}
 		catch(Exception e){
 			e.printStackTrace(System.err);
@@ -81,6 +85,10 @@ public class REST {
 		bw.write("<page>"+pa+"</page>");
 		bw.close();
 		response.setStatus(HttpServletResponse.SC_CREATED);
+		JSONObject res= new JSONObject();
+		res.put("response","OK")
+		PrintWriter out = response.getWriter();
+		out.println(res.toString());
 		}
 		catch(Exception e){
 			e.printStackTrace(System.err);
@@ -111,6 +119,10 @@ public class REST {
 		bw.write("<page>"+pa+"</page>");
 		bw.close();
 		response.setStatus(HttpServletResponse.SC_OK);
+		JSONObject res= new JSONObject();
+		res.put("response","OK")
+		PrintWriter out = response.getWriter();
+		out.println(res.toString());
 		}
 		catch(Exception e){
 			e.printStackTrace(System.err);
@@ -205,11 +217,12 @@ public class REST {
 		
 		ArrayList<String> ar = new ArrayList<String>();
 		for(int i=0;i<buf.lastIndexOf("</page>");i=buf.indexOf("</page>",i)+6){
-			ar.add(buf.substring(i+7,buf.indexOf("</page>",i)));	
+			ar.add(buf.substring(i+6,buf.indexOf("</page>",i)));	
 		}
 		int count= ar.size();
 		
 		JSONObject jo = new JSONObject();
+		//Make JSONARRAY correctly
 		jo.put("pages",new JSONArray(Arrays.asList(ar)));
 		jo.put("author","none");
 		jo.put("title",name);

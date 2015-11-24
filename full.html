@@ -37,6 +37,7 @@ $(document).ready(function(){
 	$("#create").css("visibility","hidden");
 	$("#editForm").css("visibility","hidden");
 	$("#startForm").css("visibility","hidden");
+	$("#startEdit").css("visibility","hidden");
 	makeList();
 	
 	$("#deleteButton").click(function(){
@@ -58,11 +59,22 @@ $(document).ready(function(){
 	});
 	
 	
-	$("#startEdit").submit(function(evt){
+	$("#startEdit").click(function(){
+		var title=$("#stories option:selected").text();
+		//need to insert edit data
+		$.getJSON(url+"/rest/"+key+"/story/" + title ,function(result){
+			  console.log(result.title);
+			  $("#titleEdit").val(result.title);
+			  //$("pageEdit").val(result.page[1]);
+			  for (var i=0,len=result.pages.length;i<len;i++) {
+				 $("#pageEdit").append(result.pages[i].title );
+			 }
+			  
 		  $("#startForm").css("visibility","visible");
 		  $("#editForm").css("visibility","visible");
 		  $("#deleteForm").css("visibility","hidden");
 		  $("#create").css("visibility","hidden");
+		});
 	});
 
 /*	$("#pickstory").submit(function(evt){
@@ -173,10 +185,10 @@ Admin<br>
 Story: <select id='stories'></select>
 </div>
 
+
+<div id='startEdit'>Submit</div>
+
 <div id='editForm'>
-<form id='startEdit'>
-<input type='submit'>
-</form>
 <form id='editname'>
 Name: <input type='text' id='titleEdit'>
 <br>
