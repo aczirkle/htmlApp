@@ -15,7 +15,6 @@ import javax.xml.*;
 
 import javax.servlet.http.*;
 import javax.servlet.*;
-import java.nio.file.*;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.text.DateFormat;
@@ -32,7 +31,6 @@ public class REST {
 	public void deleteStory(HttpServletRequest request, HttpServletResponse response){
 		try{
 		createConnections();
-		
 		BufferedReader br = request.getReader();
 		StringBuffer sb = new StringBuffer();
 		String l;
@@ -46,8 +44,11 @@ public class REST {
 		Statement st = conn.createStatement();
 		//System.out.println("insert into stories values ('"+title+".sty','webapps/htmlApp')");
 		st.executeUpdate("delete from stories where title='"+title+"'");
-		if(!Files.deleteIfExists("webapps/htmlApp/"+title))
+		File fs= new File("webapps/htmlApp/"+title);
+		if(!fs.delete())
 			throw new Exception("The file did not exist");
+		//if(!Files.deleteIfExists("webapps/htmlApp/"+title))
+			
 		response.setStatus(200);
 		}
 		catch(Exception e){
