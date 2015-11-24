@@ -123,7 +123,10 @@ public class MVC extends HttpServlet {
 		out.close();
 		/* todo login data if avilable*/
 	}
-	
+	/**
+	* doPost
+	* Inherited method, currently used only for REST calls due to not working when I used it for other things
+	**/
 	protected void doPost(HttpServletRequest request,
 		HttpServletResponse response) throws ServletException, IOException{
 		PrintWriter out = response.getWriter();
@@ -134,8 +137,16 @@ public class MVC extends HttpServlet {
 			try {	
 				if(page.contains("create"))
 					rest.createStory(request,response);
-				else
-					throw new Exception("No key specified");
+				else{
+					if(page.contains("edit"))
+						rest.editStory(request,response);
+					else{
+						if(page.contains("delete"))
+							rest.deleteStory(request,response);
+						else
+							throw new Exception("No key specified");
+					}
+				}
 			} catch (Exception e) {
 				e.printStackTrace(out);
 				rest.error(out);

@@ -75,17 +75,17 @@ $(document).ready(function(){
 	});*/
 	$("#editname").submit(function(evt){
 		evt.preventDefault();
-		var newTitle=$("#title").val();
+		var newTitle=$("#titleEdit").val();
 		  console.log(newTitle);
 		$.ajax({
 				type:"POST",
-				url:url+"/rest/"+key+"/story",
+				url:url+"/rest/"+key+"/edit",
 				data: "{\"pk\":" + storepk + ",\"title\":\"" + newTitle + "\",\"page\":\"" + page + "\"}",
 				dataType: "json",
 				success:function(result) {
 					$("#msg").html("Title updated");
 					  $("#editForm").css("visibility","hidden");
-					  $("#pk").val("");
+					  $("#titleEdit").val("");
 					  $("#page").val("");
 				},error:function(xhr,result,error){
 					var json = xhr.responseJSON;
@@ -97,18 +97,18 @@ $(document).ready(function(){
 		  
 	$("#create").submit(function(evt){
 		evt.preventDefault();
-		var newTitle=$("#title").val();
+		var newTitle=$("#titleCreate").val();
 		  console.log(newTitle);
 		page=$("#page").val();
 		$.ajax({
 				type:"POST",
-				url:"http://zirkleac.383.csi.miamioh.edu:8080/htmlApp/htmlApp/rest/"+key+"/create",
+				url:"http://zirkleac.383.csi.miamioh.edu:8080/htmlApp/rest/"+key+"/create",
 				data: "{\"page\":\"" + page + "\",\"title\":\"" + newTitle + "\"}",
 				dataType: "json",
 				success:function(result) {
 					$("#msg").html("Title updated");
 					  $("#editForm").css("visibility","hidden");
-					  $("#title").val("");
+					  $("#titleCreate").val("");
 					  $("#page").val("");
 				},error:function(xhr,result,error){
 					var json = xhr.responseJSON;
@@ -161,7 +161,7 @@ Story: <select id='stories'></select>
 
 <div id='editForm'>
 <form id='editname'>
-Name: <input type='text' id='title'>
+Name: <input type='text' id='titleEdit'>
 <br>
 Page: <textarea type='text' id='page' rows="1" cols="1" style="width: 200px;height: 200px;word-wrap: break-word;"></textarea>
 <br>
@@ -171,7 +171,7 @@ Page: <textarea type='text' id='page' rows="1" cols="1" style="width: 200px;heig
 
 <div id='create'>
 <form id='create'>
-Name: <input type='text' id='title'>
+Name: <input type='text' id='titleCreate'>
 <br>
 Page: <textarea type='text' id='page' rows="1" cols="1" style="width: 200px;height: 200px;word-wrap: break-word;"></textarea>
 <br>
