@@ -95,7 +95,7 @@ public class MVC extends HttpServlet {
 
 			//errorPage(request,response);
 		} catch (Exception e) {
-			e.printStackTrace(out);
+		//	e.printStackTrace(out);
 			errorPage(request,response);
 		}
 	}
@@ -148,10 +148,10 @@ public class MVC extends HttpServlet {
 					}
 				}
 			} catch (Exception e) {
-				e.printStackTrace(out);
+				//e.printStackTrace(out);
 				rest.error(out);
 			}
-			}
+		}
 	}
 
 

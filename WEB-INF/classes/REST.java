@@ -49,7 +49,7 @@ public class REST {
 			throw new Exception("The file did not exist");
 		//if(!Files.deleteIfExists("webapps/htmlApp/"+title))
 			
-		response.setStatus(200);
+		response.setStatus(HttpServletResponse.SC_OK);
 		}
 		catch(Exception e){
 			e.printStackTrace(System.err);
@@ -77,7 +77,7 @@ public class REST {
 		BufferedWriter bw = new BufferedWriter(new FileWriter("webapps/htmlApp/"+title+".sty"));
 		bw.write("<page>"+pa+"</page>");
 		bw.close();
-		response.setStatus(200);
+		response.setStatus(HttpServletResponse.SC_CREATED);
 		}
 		catch(Exception e){
 			e.printStackTrace(System.err);
@@ -105,7 +105,7 @@ public class REST {
 		BufferedWriter bw = new BufferedWriter(new FileWriter("webapps/htmlApp/"+title+".sty"));
 		bw.write("<page>"+pa+"</page>");
 		bw.close();
-		response.setStatus(200);
+		response.setStatus(HttpServletResponse.SC_OK);
 		}
 		catch(Exception e){
 			e.printStackTrace(System.err);

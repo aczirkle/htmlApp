@@ -26,7 +26,7 @@ var url  = "http://zirkleac.383.csi.miamioh.edu:8080/htmlApp";
 function makeList() {
 		 $.getJSON(url + "/rest/"+key+"/storylist",function(result){
 			 for (var i=0,len=result.StoryList.length;i<len;i++) {
-				 $("#stories").append("<option value=\"" + result.StoryList[i].pk + "\">" + result.StoryList[i].title +"</option");
+				 $("#stories").append("<option value=\"" + i + "\">" + result.StoryList[i].title +"</option");
 			 }
 		 });
 }
@@ -108,9 +108,11 @@ $(document).ready(function(){
 				dataType: "json",
 				success:function(result) {
 					$("#msg").html("Title updated");
-					  $("#editForm").css("visibility","hidden");
+					  $("#createForm").css("visibility","hidden");
 					  $("#titleCreate").val("");
 					  $("#pageCreate").val("");
+					  $("#stories").empty();
+						  makeList();
 				},error:function(xhr,result,error){
 					var json = xhr.responseJSON;
 					$("#msg").html("<h1>" + json.error + "</h1>");
@@ -120,17 +122,18 @@ $(document).ready(function(){
 
 	$("#deleteStory").submit(function(evt){
 		evt.preventDefault();
-		pk=$("#stories").val();
+		var title=$("#stories").text();
 		if (pk>0) {
-			if(confirm('Are you sure you want to delete '+pk+'')) {
+			if(confirm('Are you sure you want to delete '+title+'')) {
 				  $.ajax({
 					type:"POST",
 					url:url+"/rest/"+key+"/delete",
-					data: "{\"title\":\"" + newTitle + "\"}",
+					data: "{\"title\":\"" + title + "\"}",
 					dataType: "json",
 					success:function(result) {
 						$("#msg").html("Deleted");
-						  $("#pk").val("");
+						$("#stories").empty();
+						  makeList();
 					},error:function(xhr,result,error){
 						var json = xhr.responseJSON;
 						$("#msg").html("<h1>" + json.error + "</h1>");
@@ -154,10 +157,7 @@ Admin<br>
 <div id="deleteButton">Delete</div><br>
 
 <div id="startForm">
-<form id='pickstory'>
 Story: <select id='stories'></select>
-<input type='submit'>
-</form>
 </div>
 
 <div id='editForm'>
