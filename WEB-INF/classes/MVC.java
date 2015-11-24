@@ -72,7 +72,7 @@ public class MVC extends HttpServlet {
 				generateBook(request,out);
 			}
 			
-			if(page.contains("create") && (checkCookies(request) || checkUser(request, response))){
+			if(page.contains("admin") && (checkCookies(request) || checkUser(request, response))){
 				createPage(request,out);
 			}
 			
@@ -108,7 +108,7 @@ public class MVC extends HttpServlet {
 		cfg.setDirectoryForTemplateLoading(new File("/opt/jetty/webapps/htmlApp"));
 		Map<String,String> root = new HashMap<String,String>();
 		cfg.setDefaultEncoding("UTF-8");
-		Template temp = cfg.getTemplate("create.ftl");
+		Template temp = cfg.getTemplate("full.ftl");
 		temp.process(root,out);
 	}
 	
