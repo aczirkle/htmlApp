@@ -75,19 +75,19 @@ $(document).ready(function(){
 	});*/
 	$("#editname").submit(function(evt){
 		evt.preventDefault();
-		var newTitle=$("#titleEdit").val();
-		var page = $("#pageEdit").val();
+		var newTitle=$("#titleEdit").text();
+		var page = $("#pageEdit").text();
 		  console.log(newTitle);
 		$.ajax({
 				type:"POST",
 				url:url+"/rest/"+key+"/edit",
-				data: "{\"pk\":" + storepk + ",\"title\":\"" + newTitle + "\",\"page\":\"" + page + "\"}",
+				data: "{\"title\":\"" + newTitle + "\",\"page\":\"" + page + "\"}",
 				dataType: "json",
 				success:function(result) {
 					$("#msg").html("Title updated");
 					  $("#editForm").css("visibility","hidden");
-					  $("#titleEdit").val("");
-					  $("#pageEdit").val("");
+					  $("#titleEdit").text("");
+					  $("#pageEdit").text("");
 				},error:function(xhr,result,error){
 					var json = xhr.responseJSON;
 					$("#msg").html("<h1>" + json.error + "</h1>");
@@ -123,26 +123,25 @@ $(document).ready(function(){
 	$("#deleteStory").submit(function(evt){
 		evt.preventDefault();
 		var title=$("#stories").text();
-		if (pk>0) {
-			if(confirm('Are you sure you want to delete '+title+'')) {
-				  $.ajax({
-					type:"POST",
-					url:url+"/rest/"+key+"/delete",
-					data: "{\"title\":\"" + title + "\"}",
-					dataType: "json",
-					success:function(result) {
-						$("#msg").html("Deleted");
-						$("#stories").empty();
-						  makeList();
-					},error:function(xhr,result,error){
-						var json = xhr.responseJSON;
-						$("#msg").html("<h1>" + json.error + "</h1>");
-				}
-				});
-
+		
+		if(confirm('Are you sure you want to delete '+title+'')) {
+			  $.ajax({
+				type:"POST",
+				url:url+"/rest/"+key+"/delete",
+				data: "{\"title\":\"" + title + "\"}",
+				dataType: "json",
+				success:function(result) {
+					$("#msg").html("Deleted");
+					$("#stories").empty();
+					  makeList();
+				},error:function(xhr,result,error){
+					var json = xhr.responseJSON;
+					$("#msg").html("<h1>" + json.error + "</h1>");
 			}
+			});
+
 		}
-		});
+	});
 });
 
 
