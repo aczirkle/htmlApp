@@ -43,8 +43,7 @@ $(document).ready(function(){
 		  $("#deleteForm").css("visibility","visible");
 		  $("#create").css("visibility","hidden");
 		  $("#editForm").css("visibility","hidden");
-	});
-	
+	});	
 	$("#createButton").click(function(){
 		  $("#startForm").css("visibility","hidden");
 		  $("#create").css("visibility","visible");
@@ -52,6 +51,13 @@ $(document).ready(function(){
 		  $("#editForm").css("visibility","hidden");
 	});
 	$("#editButton").click(function(){
+		$("#startForm").css("visibility","visible");
+		  $("#startEdit").css("visibility","visible");
+
+	});
+	
+	
+	$("#startEdit").submit(function(evt){
 		  $("#startForm").css("visibility","visible");
 		  $("#editForm").css("visibility","visible");
 		  $("#deleteForm").css("visibility","hidden");
@@ -74,7 +80,15 @@ $(document).ready(function(){
 	});*/
 	$("#editname").submit(function(evt){
 		evt.preventDefault();
-		var newTitle=$("#titleEdit").text();
+		var pk=$("#titleEdit").val();
+		var elements = document.getElementById("stories").elements;
+		var newTitle;
+		for (var i = 0, element; element = elements[i++];) {
+			if(element.value ===pk)
+				newTitle=element.textContent;
+        }
+		
+		
 		var page = $("#pageEdit").text();
 		  console.log(newTitle);
 		$.ajax({
@@ -159,6 +173,9 @@ Story: <select id='stories'></select>
 </div>
 
 <div id='editForm'>
+<form id='startEdit'>
+<input type='submit'>
+</form>
 <form id='editname'>
 Name: <input type='text' id='titleEdit'>
 <br>
