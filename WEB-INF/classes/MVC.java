@@ -483,7 +483,7 @@ public class MVC extends HttpServlet {
 		return buf;
 	}
 	throw new RuntimeException("Error getting story names");*/
-		
+		createConnections();
 		root.put("stories",loadStoryName(req));
 
 		
