@@ -40,10 +40,11 @@ public class REST {
 		System.err.println(sb.toString());
 		JSONObject j = new JSONObject(sb.toString());
 		String title = j.getString("title");
-
+		if(title.equals(""))
+			throw new Exception("No text in title");
 		Statement st = conn.createStatement();
 		//System.out.println("insert into stories values ('"+title+".sty','webapps/htmlApp')");
-		st.executeUpdate("delete from stories where title='"+title+"'");
+		st.executeUpdate("delete from stories where name='"+title+"'");
 		File fs= new File("webapps/htmlApp/"+title);
 		if(!fs.delete())
 			throw new Exception("The file did not exist");
@@ -71,6 +72,8 @@ public class REST {
 		JSONObject j = new JSONObject(sb.toString());
 		String title = j.getString("title");
 		String pa = j.getString("page");
+		if(title.equals(""))
+			throw new Exception("No text in title");
 		Statement st = conn.createStatement();
 		//System.out.println("insert into stories values ('"+title+".sty','webapps/htmlApp')");
 		st.executeUpdate("insert into stories values ('"+title+".sty','webapps/htmlApp')");
@@ -99,6 +102,8 @@ public class REST {
 		JSONObject j = new JSONObject(sb.toString());
 		String title = j.getString("title");
 		String pa = j.getString("page");
+		if(title.equals(""))
+			throw new Exception("No text in title");
 		Statement st = conn.createStatement();
 		//System.out.println("insert into stories values ('"+title+".sty','webapps/htmlApp')");
 		st.executeUpdate("insert into stories values ('"+title+".sty','webapps/htmlApp')");

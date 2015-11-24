@@ -136,7 +136,7 @@ $(document).ready(function(){
 
 	$("#deleteStory").submit(function(evt){
 		evt.preventDefault();
-		var title=$("#stories").text();
+		var title=$("#stories option:selected").text();
 		
 		if(confirm('Are you sure you want to delete '+title+'')) {
 			  $.ajax({
