@@ -52,7 +52,7 @@ public class REST {
 			
 		response.setStatus(HttpServletResponse.SC_OK);
 		JSONObject res= new JSONObject();
-		res.put("response","OK")
+		res.put("response","OK");
 		PrintWriter out = response.getWriter();
 		out.println(res.toString());
 		}
@@ -86,7 +86,7 @@ public class REST {
 		bw.close();
 		response.setStatus(HttpServletResponse.SC_CREATED);
 		JSONObject res= new JSONObject();
-		res.put("response","OK")
+		res.put("response","OK");
 		PrintWriter out = response.getWriter();
 		out.println(res.toString());
 		}
@@ -120,7 +120,7 @@ public class REST {
 		bw.close();
 		response.setStatus(HttpServletResponse.SC_OK);
 		JSONObject res= new JSONObject();
-		res.put("response","OK")
+		res.put("response","OK");
 		PrintWriter out = response.getWriter();
 		out.println(res.toString());
 		}
