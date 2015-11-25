@@ -51,16 +51,24 @@ $(document).ready(function(){
 		  $("#deleteForm").css("visibility","visible");
 		  $("#create").css("visibility","hidden");
 		  $("#editForm").css("visibility","hidden");
+		  $("#editUpPage").css("visibility","hidden");
+		  $("#editDownPage").css("visibility","hidden");
+		  $("#startEdit").css("visibility","hidden");
 	});	
 	$("#createButton").click(function(){
 		  $("#startForm").css("visibility","hidden");
 		  $("#create").css("visibility","visible");
 		  $("#deleteForm").css("visibility","hidden");
 		  $("#editForm").css("visibility","hidden");
+		  $("#editUpPage").css("visibility","hidden");
+		  $("#editDownPage").css("visibility","hidden");
 	});
 	$("#editButton").click(function(){
 		$("#startForm").css("visibility","visible");
-		  $("#startEdit").css("visibility","visible");
+		$("#startEdit").css("visibility","visible");
+		$("#deleteForm").css("visibility","hidden");
+		$("#create").css("visibility","hidden");
+		
 
 	});
 	
@@ -80,8 +88,7 @@ $(document).ready(function(){
 			  
 		  $("#startForm").css("visibility","visible");
 		  $("#editForm").css("visibility","visible");
-		  $("#deleteForm").css("visibility","hidden");
-		  $("#create").css("visibility","hidden");
+		 
 		});
 	});
 	
