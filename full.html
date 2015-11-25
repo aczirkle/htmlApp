@@ -69,7 +69,7 @@ $(document).ready(function(){
 	$("#startEdit").click(function(){
 		var title=$("#stories option:selected").text();
 		pageNum=0;
-		ogtitle=title;
+		ogTitle=$("#stories option:selected").text();
 		//need to insert edit data
 		$.getJSON(url+"/rest/"+key+"/story/" + title ,function(result){
 			editRes=result;
@@ -144,12 +144,13 @@ $(document).ready(function(){
 		var page = $("#pageEdit").val();
 		  console.log(newTitle);
 		  console.log(page);
+		  console.log("{\"title\":\"" + newTitle + "\",\"page\":\"" + page + "\"\,\"pageNum\":\"" + pageNum + "\"\,\"oldTitle\":\"" + ogTitle + "\"}");
 		  if(page==="" ||newTitle==="")
 			return;
 		$.ajax({
 				type:"POST",
 				url:url+"/rest/"+key+"/edit",
-				data: "{\"title\":\"" + newTitle + "\",\"page\":\"" + page + "\,\"pageNum\":\"" + pageNum + "\,\"oldTitle\":\"" + ogTitle + "\"}",
+				data: "{\"title\":\"" + newTitle + "\",\"page\":\"" + page + "\"\,\"pageNum\":\"" + pageNum + "\"\,\"oldTitle\":\"" + ogTitle + "\"}",
 				dataType: "json",
 				success:function(result) {
 					$("#msg").html("Title updated");

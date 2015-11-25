@@ -117,7 +117,7 @@ public class REST {
 		Statement st = conn.createStatement();
 		br.close();
 		//System.out.println("insert into stories values ('"+title+".sty','webapps/htmlApp')");
-		st.executeUpdate("Update stories set title = \'"+title+"\' where title=\'"+oldTitle+"\'");
+		st.executeUpdate("Update stories set name = \'"+title+"\' where name=\'"+oldTitle+"\'");
 		br = new BufferedReader(new FileReader("webapps/htmlApp/"+title+".sty")); 
 		BufferedWriter bw = new BufferedWriter(new FileWriter("webapps/htmlApp/"+title+"temp.sty"));
 		String line;
