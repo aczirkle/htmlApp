@@ -76,9 +76,9 @@ public class MVC extends HttpServlet {
 				createPage(request,out);
 			}
 			
-			/*if(page.contains("makePage")){
+			if(page.contains("makePage")){
 				makePage(request, out);
-			}*/
+			}
 			if(page.contains("makeUser")){
 				makeUser(request, response);
 

@@ -23,7 +23,7 @@ Welcome ${user}<br>
 </div>
 
 
-<form action="create">
+<form action="admin">
 Click to access creating a story
 <input type="submit" value="Submit">
 </form>
