@@ -110,14 +110,39 @@ public class REST {
 		JSONObject j = new JSONObject(sb.toString());
 		String title = j.getString("title");
 		String pa = j.getString("page");
+		int pageNum = j.getInt("pageNum");
+		String oldTitle= j.getString("oldTitle");
 		if(title.equals(""))
 			throw new Exception("No text in title");
 		Statement st = conn.createStatement();
 		//System.out.println("insert into stories values ('"+title+".sty','webapps/htmlApp')");
-		st.executeUpdate("insert into stories values ('"+title+".sty','webapps/htmlApp')");
-		BufferedWriter bw = new BufferedWriter(new FileWriter("webapps/htmlApp/"+title+".sty"));
-		bw.write("<page>"+pa+"</page>");
+		st.executeUpdate("Update stories set title = \'"+title+"\' where title=\'"+oldTitle+"\'");
+		BufferedReader br = new BufferedReader(new FileReader("webapps/htmlApp/"+title+".sty")); 
+		BufferedWriter bw = new BufferedWriter(new FileWriter("webapps/htmlApp/"+title+"temp.sty"));
+		String line;
+		for(int i=0; (line = br.readLine()) != null;) {
+			if(line.contains("<page>") && i==pageNum){
+				for(;(line = br.readLine()) != null;){
+					if(line.contains("</page>")){
+						line = "<page>"+pa+"</page>";
+						break;
+					}
+				}
+			}
+			else{
+			   if(line.contains("<page>"))
+				   i++;
+			}
+            bw.write(line+"\n");
+         }
+		br.close();
+		//bw.write("<page>"+pa+"</page>");
 		bw.close();
+		File oldFile = new File("webapps/htmlApp/"+title+".sty");
+		oldFile.delete();
+		File newFile = new File("webapps/htmlApp/"+title+"temp.sty");
+		newFile.renameTo(oldFile);
+
 		response.setStatus(HttpServletResponse.SC_OK);
 		JSONObject res= new JSONObject();
 		res.put("response","OK");
@@ -218,7 +243,7 @@ public class REST {
 		JSONArray array = new JSONArray();
 		
 		ArrayList<String> ar = new ArrayList<String>();
-		for(int i=0;i<buf.lastIndexOf("</page>");i=buf.indexOf("</page>",i)+6){
+		for(int i=0;i<buf.lastIndexOf("</page>");i=buf.indexOf("</page>",i)+7){
 			ar.add(buf.substring(i+6,buf.indexOf("</page>",i)));	
 			array.put(new JSONObject().put("page",buf.substring(i+6,buf.indexOf("</page>",i))));
 		}
