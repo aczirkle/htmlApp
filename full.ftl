@@ -20,6 +20,11 @@ width: 500px;
 <script type="text/javascript">
 var key = "freekey";
 var storepk=-1;
+var pageNum=0;
+var numPages=-1;
+var editRes= "";
+var newPage="";
+var ogTitle="";
 var url  = "http://zirkleac.383.csi.miamioh.edu:8080/htmlApp";
 
 function makeList() {
@@ -36,6 +41,9 @@ $(document).ready(function(){
 	$("#create").css("visibility","hidden");
 	$("#editForm").css("visibility","hidden");
 	$("#startForm").css("visibility","hidden");
+	$("#startEdit").css("visibility","hidden");
+	$("#editUpPage").css("visibility","hidden");
+	$("#editDownPage").css("visibility","hidden");
 	makeList();
 	
 	$("#deleteButton").click(function(){
@@ -57,11 +65,62 @@ $(document).ready(function(){
 	});
 	
 	
-	$("#startEdit").submit(function(evt){
+	$("#startEdit").click(function(){
+		var title=$("#stories option:selected").text();
+		pageNum=0;
+		ogTitle=$("#stories option:selected").text();
+		//need to insert edit data
+		$.getJSON(url+"/rest/"+key+"/story/" + title ,function(result){
+			editRes=result;
+			  console.log(result.title);
+			  $("#titleEdit").val(result.title);
+			  numPages=result.numPages;
+				$("#pageEdit").append(result.pages[pageNum].page );
+				$("#editUpPage").css("visibility","visible");
+			  
 		  $("#startForm").css("visibility","visible");
 		  $("#editForm").css("visibility","visible");
 		  $("#deleteForm").css("visibility","hidden");
 		  $("#create").css("visibility","hidden");
+		});
+	});
+	
+	
+	$("#editUpPage").click(function(){
+		try{
+		$("#editDownPage").css("visibility","visible");
+		if(pageNum >numPages){
+			throw new Excecption("Ran out of pages")
+		}
+		pageNum++;
+		$("#pageEdit").val(editRes.pages[pageNum].page );
+		}
+		catch(e){
+			$("#pageEdit").val(newPage);
+			$("#editUpPage").css("visibility","hidden");
+		//$("#editUpPage").css("visibility","hidden");
+		}
+
+			
+	});
+	$("#editDownPage").click(function(){
+		
+		$("#editUpPage").css("visibility","visible");
+		if(pageNum>=numPages){
+			newPage = $("#pageEdit").val();
+		}
+		pageNum--;
+		$("#editForm").css("visibility","hidden");
+		$("#pageEdit").val('');
+		$("#pageEdit").val(editRes.pages[pageNum].page );
+		
+		$("#editForm").css("visibility","visible");
+		try{
+		if(editRes.pages[pageNum-1].page === "undefined")
+			$("#editDownPage").css("visibility","hidden");
+
+		}
+		catch(e){$("#editDownPage").css("visibility","hidden");}
 	});
 
 /*	$("#pickstory").submit(function(evt){
@@ -80,21 +139,17 @@ $(document).ready(function(){
 	});*/
 	$("#editname").submit(function(evt){
 		evt.preventDefault();
-		var pk=$("#titleEdit").val();
-		var elements = document.getElementById("stories").elements;
-		var newTitle;
-		for (var i = 0, element; element = elements[i++];) {
-			if(element.value ===pk)
-				newTitle=element.textContent;
-        }
-		
-		
-		var page = $("#pageEdit").text();
+		var newTitle=$("#titleEdit").val();
+		var page = $("#pageEdit").val();
 		  console.log(newTitle);
+		  console.log(page);
+		  console.log("{\"title\":\"" + newTitle + "\",\"page\":\"" + page + "\"\,\"pageNum\":\"" + pageNum + "\"\,\"oldTitle\":\"" + ogTitle + "\"}");
+		  if(page==="" ||newTitle==="")
+			return;
 		$.ajax({
 				type:"POST",
 				url:url+"/rest/"+key+"/edit",
-				data: "{\"title\":\"" + newTitle + "\",\"page\":\"" + page + "\"}",
+				data: "{\"title\":\"" + newTitle + "\",\"page\":\"" + page + "\"\,\"pageNum\":\"" + pageNum + "\"\,\"oldTitle\":\"" + ogTitle + "\"}",
 				dataType: "json",
 				success:function(result) {
 					$("#msg").html("Title updated");
@@ -135,7 +190,7 @@ $(document).ready(function(){
 
 	$("#deleteStory").submit(function(evt){
 		evt.preventDefault();
-		var title=$("#stories").text();
+		var title=$("#stories option:selected").text();
 		
 		if(confirm('Are you sure you want to delete '+title+'')) {
 			  $.ajax({
@@ -172,18 +227,22 @@ Admin<br>
 Story: <select id='stories'></select>
 </div>
 
+
+<div id='startEdit'>Submit</div>
+
 <div id='editForm'>
-<form id='startEdit'>
-<input type='submit'>
-</form>
 <form id='editname'>
 Name: <input type='text' id='titleEdit'>
 <br>
-Page: <textarea type='text' id='pageEdit' rows="1" cols="1" style="width: 200px;height: 200px;word-wrap: break-word;"></textarea>
+Page: <br><textarea type='text' id='pageEdit' rows="1" cols="1" style="width: 200px;height: 200px;word-wrap: break-word;"></textarea>
 <br>
+Please Submit any changes per page. Any changes without hitting submit will not be saved.<br>
 <input type='submit'>
 </form>
 </div>
+<div id='editDownPage'>Page Down</div>
+<div id='editUpPage'>Page Up</div>
+
 
 <div id='create'>
 <form id='create'>
