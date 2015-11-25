@@ -220,7 +220,7 @@ public class REST {
 		ArrayList<String> ar = new ArrayList<String>();
 		for(int i=0;i<buf.lastIndexOf("</page>");i=buf.indexOf("</page>",i)+6){
 			ar.add(buf.substring(i+6,buf.indexOf("</page>",i)));	
-			array.put(new JSONObject("page",buf.substring(i+6,buf.indexOf("</page>",i))));
+			array.put(new JSONObject().put("page",buf.substring(i+6,buf.indexOf("</page>",i))));
 		}
 		int count= ar.size();
 		
