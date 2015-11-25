@@ -227,7 +227,7 @@ public class REST {
 		
 		//Make JSONARRAY correctly
 		JSONObject jo = new JSONObject();
-		//jo.put("pages",array);
+		jo.put("pages",array);
 		//jo.put("pages",new JSONArray(Arrays.asList(ar)));
 		jo.put("author","none");
 		jo.put("title",name);
