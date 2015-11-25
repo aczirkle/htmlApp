@@ -215,18 +215,19 @@ public class REST {
 			buf.append(str);
 		in.close();
 		
-		JSONObject jo = new JSONObject();
+		JSONObject array = new JSONObject();
 		
 		ArrayList<String> ar = new ArrayList<String>();
 		for(int i=0;i<buf.lastIndexOf("</page>");i=buf.indexOf("</page>",i)+6){
 			ar.add(buf.substring(i+6,buf.indexOf("</page>",i)));	
-			jo.put("pages",buf.substring(i+6,buf.indexOf("</page>",i)));
+			array.put(new JSONObject("page",buf.substring(i+6,buf.indexOf("</page>",i))));
 		}
 		int count= ar.size();
 		
 		
 		//Make JSONARRAY correctly
-		
+		JSONObject jo = new JSONObject();
+		jo.put("pages",array);
 		//jo.put("pages",new JSONArray(Arrays.asList(ar)));
 		jo.put("author","none");
 		jo.put("title",name);

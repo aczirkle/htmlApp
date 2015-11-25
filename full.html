@@ -67,7 +67,7 @@ $(document).ready(function(){
 			  $("#titleEdit").val(result.title);
 			  //$("pageEdit").val(result.page[1]);
 			  for (var i=0,len=result.pages.length;i<len;i++) {
-				 $("#pageEdit").append(result.pages[i].title );
+				 $("#pageEdit").append(result.pages[i].page );
 			 }
 			  
 		  $("#startForm").css("visibility","visible");
@@ -93,15 +93,7 @@ $(document).ready(function(){
 	});*/
 	$("#editname").submit(function(evt){
 		evt.preventDefault();
-		var pk=$("#titleEdit").val();
-		var elements = document.getElementById("stories").elements;
-		var newTitle;
-		for (var i = 0, element; element = elements[i++];) {
-			if(element.value ===pk)
-				newTitle=element.textContent;
-        }
-		
-		
+		var newTitle=$("#titleEdit").text();
 		var page = $("#pageEdit").text();
 		  console.log(newTitle);
 		$.ajax({
