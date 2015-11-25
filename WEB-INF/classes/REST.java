@@ -215,7 +215,7 @@ public class REST {
 			buf.append(str);
 		in.close();
 		
-		JSONObject array = new JSONObject();
+		JSONArray array = new JSONArray();
 		
 		ArrayList<String> ar = new ArrayList<String>();
 		for(int i=0;i<buf.lastIndexOf("</page>");i=buf.indexOf("</page>",i)+6){
