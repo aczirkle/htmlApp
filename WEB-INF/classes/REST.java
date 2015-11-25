@@ -115,9 +115,10 @@ public class REST {
 		if(title.equals(""))
 			throw new Exception("No text in title");
 		Statement st = conn.createStatement();
+		br.close();
 		//System.out.println("insert into stories values ('"+title+".sty','webapps/htmlApp')");
 		st.executeUpdate("Update stories set title = \'"+title+"\' where title=\'"+oldTitle+"\'");
-		BufferedReader br = new BufferedReader(new FileReader("webapps/htmlApp/"+title+".sty")); 
+		br = new BufferedReader(new FileReader("webapps/htmlApp/"+title+".sty")); 
 		BufferedWriter bw = new BufferedWriter(new FileWriter("webapps/htmlApp/"+title+"temp.sty"));
 		String line;
 		for(int i=0; (line = br.readLine()) != null;) {
