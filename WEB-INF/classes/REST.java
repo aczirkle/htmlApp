@@ -119,7 +119,7 @@ public class REST {
 		//System.out.println("insert into stories values ('"+title+".sty','webapps/htmlApp')");
 		st.executeUpdate("Update stories set name = \'"+title+"\' where name=\'"+oldTitle+"\'");
 		br = new BufferedReader(new FileReader("webapps/htmlApp/"+title+"")); 
-		BufferedWriter bw = new BufferedWriter(new FileWriter("webapps/htmlApp/"+title+"temp"));
+		BufferedWriter bw = new BufferedWriter(new FileWriter("webapps/htmlApp/temp"+title+""));
 		String line;
 		for(int i=0; (line = br.readLine()) != null;) {
 			if(line.contains("<page>") && i==pageNum){
@@ -139,9 +139,9 @@ public class REST {
 		br.close();
 		//bw.write("<page>"+pa+"</page>");
 		bw.close();
-		File oldFile = new File("webapps/htmlApp/"+title+".sty");
+		File oldFile = new File("webapps/htmlApp/"+title+"");
 		oldFile.delete();
-		File newFile = new File("webapps/htmlApp/"+title+"temp.sty");
+		File newFile = new File("webapps/htmlApp/temp"+title+"");
 		newFile.renameTo(oldFile);
 
 		response.setStatus(HttpServletResponse.SC_OK);
