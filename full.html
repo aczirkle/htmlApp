@@ -67,7 +67,7 @@ $(document).ready(function(){
 			  $("#titleEdit").val(result.title);
 			  //$("pageEdit").val(result.page[1]);
 			  for (var i=0,len=result.pages.length;i<len;i++) {
-				 $("#pageEdit").append(result.pages[i].page );
+				 $("#pageEdit").append(result.pages[i].pages.page );
 			 }
 			  
 		  $("#startForm").css("visibility","visible");
